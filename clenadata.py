@@ -25,6 +25,7 @@ results.drop(['Book_Title'], axis = 1, inplace=True)
 # Creating sentinel values
 results['awards'].replace(to_replace = "[]", value = 0, inplace = True)
 results['setting'].replace(to_replace = "[]", value = "Missing", inplace = True)
+results['genres'].replace(to_replace = "[]", value = "Missing", inplace = True)
 results.fillna(value = "Missing", inplace = True)
 
 # Insering values mannualy
