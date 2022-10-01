@@ -28,7 +28,7 @@ results['setting'].replace(to_replace = "[]", value = "Missing", inplace = True)
 results.fillna(value = "Missing", inplace = True)
 
 # Insering values mannualy
-results['language'].fillna(value = "English", inplace = True)
+results['language'].replace(to_replace = "Missing", value = "English", inplace = True)
 
 results.to_csv('results.csv', index = False, header = True)
 print(results.count())
