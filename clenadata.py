@@ -26,7 +26,6 @@ results.drop(['Book_Title'], axis = 1, inplace=True)
 # Derived Measure
 b = []
 for i in results['awards'].values:
-    list(i)
     a = len(ast.literal_eval(i))
     b.append(a)
 results['awards'] = b
