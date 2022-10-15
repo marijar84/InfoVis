@@ -3,8 +3,13 @@ var allGenres = [];
 
 
 d3.csv("resultshandmade2.csv").then(function (data) {
+    data.forEach(function(d) { //gives error but the value of max is correct
+        d.awards = +d.awards;
+    });
     filldropDown_genre(data);
-});
+    init2(data);
+})
+.catch(function(err) { console.log(err); });
 
 
 
@@ -76,13 +81,14 @@ $(function () {
 
 /*************************************** Start --> Scatter plot ***************************************/
 
-function init2() {
+function init2(data) {
 
-    var dataset1 = [
-        [90, 20], [20, 100], [66, 44],
-        [53, 80], [24, 182], [80, 72],
-        [10, 76], [33, 150], [100, 15]
-    ];
+    // var dataset1 = [
+    //     [90, 20], [20, 100], [66, 44],
+    //     [53, 80], [24, 182], [80, 72],
+    //     [10, 76], [33, 200], [100, 15]
+    // ];
+
 
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
@@ -99,9 +105,13 @@ function init2() {
             "translate(" + margin.left + "," + margin.top + ")");
 
 
+
+    max = d3.max(data, function(d) {return d.awards;})
+    console.log(max);
+
     // Step 4 
     var xScale = d3.scaleLinear().domain([0, 100]).range([0, width]),
-        yScale = d3.scaleLinear().domain([0, 200]).range([height, 0]);
+        yScale = d3.scaleLinear().domain([0, max]).range([height, 0]);
 
     // Step 5
     // Title
@@ -141,7 +151,7 @@ function init2() {
     // Step 7
     svg.append('g')
         .selectAll("dot")
-        .data(dataset1)
+        .data(data)
         .enter()
         .append("circle")
         .attr("cx", function (d) { return xScale(d[0]); })
