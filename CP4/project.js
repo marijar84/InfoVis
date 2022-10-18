@@ -2,14 +2,18 @@ const csvdata = "";
 var allGenres = [];
 
 
-d3.csv("resultshandmade2.csv").then(function (data) {
-    data.forEach(function(d) { //gives error but the value of max is correct
-        d.awards = +d.awards;
+
+
+function init(){
+    d3.csv("resultshandmade2.csv").then(function (data) {
+        filldropDown_genre(data);
+        scatterPlot(data);
+        sankeyChart(data);        
+        pieChart(data);
     });
-    filldropDown_genre(data);
-    init2(data);
-})
-.catch(function(err) { console.log(err); });
+
+   
+}
 
 
 
@@ -17,8 +21,7 @@ d3.csv("resultshandmade2.csv").then(function (data) {
 //fill out dropdown list information
 function filldropDown_genre(data) {
     for (var i = 0; i < data.length; i++) {
-        var genres = data[i].genres;
-        console.log(data[i]);
+        var genres = data[i].genres;        
         //Remove all special characteres    
         genres = genres.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
         //set in an array allgenres by item      
@@ -79,15 +82,22 @@ $(function () {
 
 /*************************************** End --> Slider by year ***************************************/
 
+
+/*************************************** Start --> Sankey chart ***************************************/
+
+function sankeyChart(data) {
+   var dataByYear = d3.group(data, d => d.publishDate);
+
+   //console.log(dataByYear);
+
+}
+
+/*************************************** End --> Sankey chart ***************************************/
+
+
 /*************************************** Start --> Scatter plot ***************************************/
 
-function init2(data) {
-
-    // var dataset1 = [
-    //     [90, 20], [20, 100], [66, 44],
-    //     [53, 80], [24, 182], [80, 72],
-    //     [10, 76], [33, 200], [100, 15]
-    // ];
+function scatterPlot(data) {
 
 
     // set the dimensions and margins of the graph
@@ -110,8 +120,8 @@ function init2(data) {
     console.log(max);
 
     // Step 4 
-    var xScale = d3.scaleLinear().domain([0, 100]).range([0, width]),
-        yScale = d3.scaleLinear().domain([0, max]).range([height, 0]);
+    var xScale = d3.scaleLinear().domain([0, 100]).range([0, width])
+    var yScale = d3.scaleLinear().domain([0, 200]).range([height, 0]);
 
     // Step 5
     // Title
@@ -162,3 +172,31 @@ function init2(data) {
 
     /*************************************** End --> Scatter plot ***************************************/
 }
+
+/*************************************** End --> Scatter plot ***************************************/
+
+
+
+/*************************************** Start --> Pie chart ***************************************/
+
+function pieChart(data){
+    //Sort data by publishedData
+    data.sort(function(x, y){
+        return d3.ascending(x.publishDate, y.publishDate);
+     });    
+    
+    //GroupByYear
+    var dataByYear = d3.group(data, d => d.publishDate);
+       
+    console.log(dataByYear);
+
+    /*var iDiv = document.createElement('div');
+    iDiv.id = 'block';
+    iDiv.className = 'block';
+    document.getElementsByTagName('pieChart')[0].appendChild(iDiv);*/
+
+
+}
+
+
+/*************************************** End --> Pie plot ***************************************/
