@@ -11,11 +11,7 @@ function init(){
         sankeyChart(data);        
         pieChart(data);
     });
-
-   
 }
-
-
 
 /*************************************** Start --> Dropdown list ***************************************/
 //fill out dropdown list information
@@ -99,6 +95,10 @@ function sankeyChart(data) {
 
 function scatterPlot(data) {
 
+    //create arrays from the dataset
+    nawards = data.map(d => +d.awards);
+    nliked = data.map(d => +d.likedPercent);
+
 
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
@@ -114,20 +114,14 @@ function scatterPlot(data) {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+    // Scales
+    var xScale = d3.scaleLinear().domain(d3.extent(nawards)).range([0, width])
+    var yScale = d3.scaleLinear().domain([75, 100]).range([height, 0]);
 
-
-    max = d3.max(data, function(d) {return d.awards;})
-    console.log(max);
-
-    // Step 4 
-    var xScale = d3.scaleLinear().domain([0, 100]).range([0, width])
-    var yScale = d3.scaleLinear().domain([0, 200]).range([height, 0]);
-
-    // Step 5
     // Title
     svg.append('text')
-        .attr('x', width / 2 + 100)
-        .attr('y', 100)
+        .attr('x', width / 2)
+        .attr('y', 10)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
         .style('font-size', 20)
@@ -135,40 +129,43 @@ function scatterPlot(data) {
 
     // X label
     svg.append('text')
-        .attr('x', width / 2 + 100)
-        .attr('y', height - 15 + 150)
+        .attr('x', width / 2 + 150)
+        .attr('y', height + 30)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
         .style('font-size', 12)
-        .text('Independant');
+        .text('Awards Number');
 
     // Y label
     svg.append('text')
         .attr('text-anchor', 'middle')
-        .attr('transform', 'translate(60,' + height + ')rotate(-90)')
+        .attr('transform', 'translate(0,45)rotate(-90)')
         .style('font-family', 'Helvetica')
         .style('font-size', 12)
-        .text('Dependant');
+        .text('Liked Percentage');
 
-    // Step 6
+    // Create X axis
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xScale));
 
+    // Create Y axis
     svg.append("g")
+        .attr("transform", "translate(0,0)")
         .call(d3.axisLeft(yScale));
 
-    // Step 7
+    // Create dots
     svg.append('g')
         .selectAll("dot")
-        .data(data)
+        .data(d3.zip(nawards, nliked))
         .enter()
         .append("circle")
-        .attr("cx", function (d) { return xScale(d[0]); })
-        .attr("cy", function (d) { return yScale(d[1]); })
-        .attr("r", 2)
-        .attr("transform", "translate(" + 100 + "," + 100 + ")")
-        .style("fill", "#CC0000");
+            .attr("cx", function(d){
+                return xScale(d[0]);})
+            .attr("cy",  function(d){
+                return yScale(d[1]);})
+            .attr("r", 2)
+            .style("fill", "#CC0000");
 
     /*************************************** End --> Scatter plot ***************************************/
 }
