@@ -12,8 +12,6 @@ function init() {
         dataPieChart(data);
         csvdata = data;
     });
-
-
 }
 
 /*************************************** Start --> Dropdown list ***************************************/
@@ -155,15 +153,6 @@ function scatterPlot(data) {
     var xScale = d3.scaleLinear().domain(d3.extent(nawards)).range([0, width])
     var yScale = d3.scaleLinear().domain([75, 100]).range([height, 0]);
 
-
-    max = d3.max(data, function (d) { return d.awards; })
-    console.log(max);
-
-    // Step 4 
-    var xScale = d3.scaleLinear().domain([0, 100]).range([0, width])
-    var yScale = d3.scaleLinear().domain([0, 200]).range([height, 0]);
-
-    // Step 5
     // Title
     svg.append('text')
         .attr('x', width / 2)
