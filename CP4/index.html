@@ -50,7 +50,7 @@
 
           <div class="col">
             <div class="dropdown">
-              <select id='genres'>
+              <select id='genres' onmousedown="this.value='';" onchange="selectDropDown(this.value);">
               </select>
             </div>
           </div>
@@ -69,11 +69,12 @@
           <div id="my_dataviz"></div>
         </div>
         <div class="row">
-          <div id="pieChart"></div>
+          
         </div>
       </div>
     </div>
   </div>
+  <div id="pieChart"></div>
 
 </body>
 
