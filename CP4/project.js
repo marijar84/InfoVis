@@ -197,12 +197,13 @@ function scatterPlot(data) {
         .attr("cx", (d) => xScale(parseFloat(d.awards)))
         .attr("cy",  (d) => yScale(parseFloat(d.likedPercent)))
         .attr("r", 2)
-        .style("fill", "#CC0000")
+        .style("fill", "blue")
         .on("mouseover", function (d, i) {
             const[x, y] = d3.pointer(d);
             d3.select(this).transition()
                 .duration('100')
-                .attr("r", 7);
+                .attr("r", 7)
+                .style("fill", "red");
             div.transition()
                 .duration(100)
                 .style("opacity", 1);
@@ -213,7 +214,8 @@ function scatterPlot(data) {
         .on('mouseout', function (d, i) {
             d3.select(this).transition()
                 .duration('200')
-                .attr("r", 2);
+                .attr("r", 2)
+                .style("fill", "blue");
             div.transition()
                 .duration('200')
                 .style("opacity", 0);
