@@ -130,11 +130,6 @@ function dataSankey(data) {
 
 function scatterPlot(data) {
 
-    //create arrays from the dataset
-    nawards = data.map(d => +d.awards);
-    nliked = data.map(d => +d.likedPercent);
-
-
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 460 - margin.left - margin.right,
@@ -150,7 +145,7 @@ function scatterPlot(data) {
             "translate(" + margin.left + "," + margin.top + ")");
 
     // Scales
-    var xScale = d3.scaleLinear().domain(d3.extent(nawards)).range([0, width])
+    var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([0, width])
     var yScale = d3.scaleLinear().domain([75, 100]).range([height, 0]);
 
     // Title
@@ -192,15 +187,17 @@ function scatterPlot(data) {
     // Create dots
     svg.append('g')
         .selectAll("dot")
-        .data(d3.zip(nawards, nliked))
+        .data(data)
         .enter()
         .append("circle")
-            .attr("cx", function(d){
-                return xScale(d[0]);})
-            .attr("cy",  function(d){
-                return yScale(d[1]);})
-            .attr("r", 2)
-            .style("fill", "#CC0000");
+        .attr("cx", (d) => xScale(parseFloat(d.awards)))
+        .attr("cy",  (d) => yScale(parseFloat(d.likedPercent)))
+        .attr("r", 2)
+        .style("fill", "#CC0000");
+        // .on("mouseover", (event, d) => handleMouseOver(d))
+        // .on("mouseleave", (event, d) => handleMouseLeave())
+        // .append("title")
+        // .text((d) => d.title);
 
     /*************************************** End --> Scatter plot ***************************************/
 }
@@ -297,7 +294,7 @@ function dataPieChart(data) {
     for (var i = startYear; i <= lastYear; i = i + 10) {
 
         var endYear = parseInt(startYear + 10);
-        console.log("startYear", startYear, "endYear", endYear, "lastYear", lastYear, "i ", i);
+        //console.log("startYear", startYear, "endYear", endYear, "lastYear", lastYear, "i ", i);
 
         //GroupByYear 
         pieChartData = dataFilter.filter(function (d) { return d.publishDate >= startYear && d.publishDate < endYear });
@@ -325,7 +322,7 @@ function getAuthorByBook(data) {
         var books = new Array();
         var authorName = "";
 
-        console.log("authors", authors.size);
+        //console.log("authors", authors.size);
         if (authors.size > 30) {
             if (valueAuthor.length == 1) {
                 authorName = "Authors";
@@ -391,9 +388,21 @@ function getAuthorByBook(data) {
             });
         }
     });
-    console.log("pieData", pieData);
+    //console.log("pieData", pieData);
     return pieData;
 }
 
 
 /*************************************** End --> Pie plot ***************************************/
+function handleMouseOver(item) {
+    d3.selectAll(".itemValue")
+      .filter(function (d, i) {
+        return d.title == item.title;
+      })
+      .attr("r", 10)
+      .style("fill", "red");
+  }
+  
+  function handleMouseLeave() {
+    d3.selectAll(".itemValue").style("fill", "steelblue").attr("r", 4);
+  }
