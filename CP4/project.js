@@ -150,7 +150,7 @@ function scatterPlot(data) {
 
     // Scales
     var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([0, width])
-    var yScale = d3.scaleLinear().domain([75, 100]).range([height, 0]);
+    var yScale = d3.scaleLinear().domain([0,5]).range([0, width]).range([height, 0]);
 
     // Title
     svg.append('text')
@@ -195,7 +195,7 @@ function scatterPlot(data) {
         .enter()
         .append("circle")
         .attr("cx", (d) => xScale(parseFloat(d.awards)))
-        .attr("cy",  (d) => yScale(parseFloat(d.likedPercent)))
+        .attr("cy",  (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
         .style("fill", "blue")
         .on("mouseover", function (d, i) {
