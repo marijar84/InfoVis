@@ -193,8 +193,17 @@ function scatterPlot(data) {
         .attr("cx", (d) => xScale(parseFloat(d.awards)))
         .attr("cy",  (d) => yScale(parseFloat(d.likedPercent)))
         .attr("r", 2)
-        .style("fill", "#CC0000");
-        // .on("mouseover", (event, d) => handleMouseOver(d))
+        .style("fill", "#CC0000")
+        .on("mouseover", function (d, i) {
+            d3.select(this).transition()
+                .duration('100')
+                .attr("r", 7);
+       })
+        .on('mouseout', function (d, i) {
+            d3.select(this).transition()
+                .duration('200')
+                .attr("r", 2);
+        });
         // .on("mouseleave", (event, d) => handleMouseLeave())
         // .append("title")
         // .text((d) => d.title);
