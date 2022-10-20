@@ -130,6 +130,10 @@ function dataSankey(data) {
 
 function scatterPlot(data) {
 
+    var div = d3.select("body").append("div")
+        .attr("class", "title")
+        .style("opacity", 0);
+
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 460 - margin.left - margin.right,
@@ -195,18 +199,25 @@ function scatterPlot(data) {
         .attr("r", 2)
         .style("fill", "#CC0000")
         .on("mouseover", function (d, i) {
+            const[x, y] = d3.pointer(d);
             d3.select(this).transition()
                 .duration('100')
                 .attr("r", 7);
+            div.transition()
+                .duration(100)
+                .style("opacity", 1);
+            div.html(i.title)
+                .style("left", (x +50) + "px")
+                .style("top", (y + 100) + "px");
        })
         .on('mouseout', function (d, i) {
             d3.select(this).transition()
                 .duration('200')
                 .attr("r", 2);
+            div.transition()
+                .duration('200')
+                .style("opacity", 0);
         });
-        // .on("mouseleave", (event, d) => handleMouseLeave())
-        // .append("title")
-        // .text((d) => d.title);
 
     /*************************************** End --> Scatter plot ***************************************/
 }
@@ -403,15 +414,3 @@ function getAuthorByBook(data) {
 
 
 /*************************************** End --> Pie plot ***************************************/
-function handleMouseOver(item) {
-    d3.selectAll(".itemValue")
-      .filter(function (d, i) {
-        return d.title == item.title;
-      })
-      .attr("r", 10)
-      .style("fill", "red");
-  }
-  
-  function handleMouseLeave() {
-    d3.selectAll(".itemValue").style("fill", "steelblue").attr("r", 4);
-  }
