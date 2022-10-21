@@ -1,20 +1,42 @@
 let csvdata;
 var allGenres = [];
-
-
-
+var allPublishers = [];
 
 function init() {
     d3.csv("resultshandmade2.csv").then(function (data) {
         filldropDown_genre(data);
+        filldropDown_publisher(data);
         scatterPlot(data);
         sankeyChart(data);
-        dataPieChart(data);
+        unitChart(data);
         csvdata = data;
     });
 }
 
-/*************************************** Start --> Dropdown list ***************************************/
+//#region  Rating 
+
+function ratingclick(value) {
+
+    /*removePieChart();
+
+    console.log("value", value);
+    console.log(csvdata);
+
+    const filteredResult = csvdata.filter((item) => {
+        console.log(parseFloat(item.rating))
+        return (parseFloat(item.rating) >= value && parseFloat(item.rating) < value);
+    });
+
+    console.log("filteredResult", filteredResult);
+
+    if (filteredResult.length > 0) {
+        dataPieChart(filteredResult);
+    }*/
+}
+//#endregion
+
+//#region Dropdown list for Genre
+
 //fill out dropdown list information
 function filldropDown_genre(data) {
 
@@ -62,7 +84,7 @@ function removeduplicate() {
 }
 
 function selectDropDown(value) {
-    if (value == "All genre") {
+    /*if (value == "All genre") {
         removePieChart();
         dataPieChart(csvdata);
     }
@@ -75,20 +97,21 @@ function selectDropDown(value) {
             removePieChart();
             dataPieChart(filteredResult);
         }
-    }
+    }*/
 }
 
 function removePieChart() {
-    var div = document.getElementById('pieChart');
+    var div = document.getElementById('unitchart');
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     }
 }
 
-/*************************************** End --> Dropdown list ***************************************/
 
+//#endregion
 
-/*************************************** Start --> Slider by year ***************************************/
+//#region Slider by year 
+
 $(function () {
     $("#slider-range").slider({
         range: true,
@@ -102,31 +125,14 @@ $(function () {
     $("#amount").val("$" + $("#slider-range").slider("values", 0) +
         " - $" + $("#slider-range").slider("values", 1));
 });
+//#endregion
 
-/*************************************** End --> Slider by year ***************************************/
-
-
-/*************************************** Start --> Sankey chart ***************************************/
-
+//#region sankeyChart 
 function sankeyChart(data) {
-    var dataByYear = d3.group(data, d => d.publishDate);
-
-    //console.log(dataByYear);
-
 }
+//#endregion
 
-function dataSankey(data) {
-
-    var data;
-
-
-    return data;
-}
-
-/*************************************** End --> Sankey chart ***************************************/
-
-
-/*************************************** Start --> Scatter plot ***************************************/
+//#region  Scatter plot 
 
 function scatterPlot(data) {
 
@@ -150,7 +156,7 @@ function scatterPlot(data) {
 
     // Scales
     var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([0, width])
-    var yScale = d3.scaleLinear().domain([0,5]).range([0, width]).range([height, 0]);
+    var yScale = d3.scaleLinear().domain([0, 5]).range([0, width]).range([height, 0]);
 
     // Title
     svg.append('text')
@@ -195,11 +201,11 @@ function scatterPlot(data) {
         .enter()
         .append("circle")
         .attr("cx", (d) => xScale(parseFloat(d.awards)))
-        .attr("cy",  (d) => yScale(parseFloat(d.rating)))
+        .attr("cy", (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
         .style("fill", "blue")
         .on("mouseover", function (d, i) {
-            const[x, y] = d3.pointer(d);
+            const [x, y] = d3.pointer(d);
             d3.select(this).transition()
                 .duration('100')
                 .attr("r", 7)
@@ -208,9 +214,9 @@ function scatterPlot(data) {
                 .duration(100)
                 .style("opacity", 1);
             div.html(i.title)
-                .style("left", (x +50) + "px")
+                .style("left", (x + 50) + "px")
                 .style("top", (y + 100) + "px");
-       })
+        })
         .on('mouseout', function (d, i) {
             d3.select(this).transition()
                 .duration('200')
@@ -223,86 +229,54 @@ function scatterPlot(data) {
 
     /*************************************** End --> Scatter plot ***************************************/
 }
+//#endregion
 
-/*************************************** End --> Scatter plot ***************************************/
+//#region unit Chart with dropdown
+const margin = { top: 10, right: 30, bottom: 30, left: 30 },
+    width = 800 - margin.left - margin.right,
+    height = 480 - margin.top - margin.bottom;
 
+//x scales
+const x = d3.scaleLinear()
+    .rangeRound([0, width]);
 
+//tooltip
+const tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
-/*************************************** Start --> Pie chart ***************************************/
+//#region Dropdown Publisher
+//fill out dropdown list information
+function filldropDown_publisher(data) {
 
-function pieChart(data, startYear, endYear) {
+    const genreDropDown = document.getElementById("publishers");
 
-    if (data.length > 0) {
+    //Fill out information inside dropdown list
+    for (var i = 0; i < data.length; i++) {
+        let option = document.createElement("option");
+        option.setAttribute("value", data[i].publisher);
+        let optionText = document.createTextNode(data[i].publisher);
+        option.appendChild(optionText);
 
-        var iDiv = document.createElement('div');
-        var nameDiv = startYear;
-        iDiv.innerHTML = nameDiv + "s";
-        iDiv.className = startYear
-
-        // set the dimensions and margins of the graph
-        var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-            width = 460 + margin.left + margin.right,
-            height = 400 + margin.top + margin.bottom;
-
-        // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-        var radius = 200;//Math.min(width, height) / 2 - margin
-
-        // append the svg object to the div called 'my_dataviz'
-        var svg = d3.select(iDiv)
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .style("background", "white")
-            .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        // set the color scale
-        var color = d3.scaleOrdinal()
-            .domain(data)
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
-
-        // Compute the position of each group on the pie:
-        var pie = d3.pie()
-            .value(function (d) { return d.Amount; })(data);
-
-        var arcGenerator = d3.arc()
-            .innerRadius(0)
-            .outerRadius(radius)
-
-        svg
-            .selectAll('whatever')
-            .data(pie)
-            .enter()
-            .append('path')
-            .attr('d', arcGenerator)
-            .attr('fill', function (d) { return (color(d.data.Author)) })
-            .attr("stroke", "black")
-            .style("stroke-width", "2px")
-            .style("opacity", 0.7);
-
-        //Add Annotation
-        svg
-            .selectAll('mySlices')
-            .data(pie)
-            .enter()
-            .append('text')
-            .text(function (d) { return d.data.Author })
-            .attr("transform", function (d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
-            .style("text-anchor", "middle")
-            .style("font-size", 17)
-
-        document.getElementById('pieChart').appendChild(iDiv);
+        genreDropDown.appendChild(option);
     }
+    removeduplicate_publisher();
 }
 
-function dataPieChart(data) {
-
-    var pieChartData;
-
-    //Sort data by publishedData
-    data.sort(function (x, y) {
-        return d3.ascending(x.publishDate, y.publishDate);
+//remove duplicate data for dropdown list
+function removeduplicate_publisher() {
+    var mycode = {};
+    $("select[id='publishers'] > option").each(function () {
+        if (mycode[this.text]) {
+            $(this).remove();
+        } else {
+            mycode[this.text] = this.value;
+        }
     });
+}
+
+function selectDropDownPublishers(value) {
 
     //Remove missing values
     var dataFilter = data.filter(function (d) { return d.publishDate !== "Missing" });
@@ -325,94 +299,111 @@ function dataPieChart(data) {
         startYear = endYear;
 
     }
-    return pieChartData;
+}
+//#endregion
+
+function unitChart(data) {
+    console.log("data", data);
+
+    var div = d3.select("body").append("div")
+        .attr("class", "title")
+        .style("opacity", 0);
+
+    //set up svg
+    const svg = d3.select("#unitchart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            `translate(${margin.left}, ${margin.top})`);
+
+    x.domain(d3.extent(data, (d) => parseFloat(d.publishDate))).range([0, width]);
+
+    svg.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+
+    const nbins = 50;
+
+    //histogram binning
+    const histogram = d3.histogram()
+        .domain(x.domain())
+        .thresholds(x.ticks(nbins))
+        .value(function (d) { return parseInt(d.publishDate); })
+
+    //binning data and filtering out empty bins
+    const bins = histogram(data).filter(d => d.length > 0);
+    console.log("bin", bins);
+
+    //g container for each bin
+    let binContainer = svg.selectAll(".gBin")
+        .data(bins);
+
+    binContainer.exit().remove()
+
+    let binContainerEnter = binContainer.enter()
+        .append("g")
+        .attr("class", "gBin")
+        .attr("transform", d => `translate(${x(d.x0)}, ${height})`)
+
+    //need to populate the bin containers with data the first time
+    binContainerEnter.selectAll("circle")
+        .data(d => d.map((p, i) => {
+            return {
+                idx: i,
+                name: p.title,
+                value: parseInt(p.publishDate),
+                radius: (x(d.x1) - x(d.x0)) / 2
+            }
+        }))
+        .enter()
+        .append("circle")
+        .attr("class", "enter")
+        .attr("cx", 0) //g element already at correct x pos
+        .attr("cy", function (d) {
+            return - d.idx * 2 * d.radius - d.radius;
+        })
+        .attr("r", 0)
+        .on("mouseover", function (d, i) {
+            const [x, y] = d3.pointer(d);
+            d3.select(this).transition()
+                .duration('100')
+                .attr("r", 7)
+                .style("fill", "red");
+            div.transition()
+                .duration(100)
+                .style("opacity", 1);
+            div.html(i.title)
+                .style("left", (x + 50) + "px")
+                .style("top", (y + 100) + "px");
+        })
+        .on('mouseout', function (d, i) {
+            d3.select(this).transition()
+                .duration('200')
+                .attr("r", 7)
+                .style("fill", "#EDCA3A");
+            div.transition()
+                .duration('200')
+                .style("opacity", 0);
+        })
+        .transition()
+        .duration(500)
+        .attr("r", function (d) {
+            return (d.length == 0) ? 0 : d.radius;
+        })
 }
 
-function getAuthorByBook(data) {
-    //Remove missing values
-    var dataFilter = data.filter(function (d) { return d.Author !== "Missing" });
+//#endregion
 
-    var authors = d3.group(dataFilter, d => d.Author);
-    //var dataFilterAuthorOneBook = authors.filter((item) => {
-    //  return (item.value.indexOf(value) > 1)});
-    var pieData = [];
-    var authorByBook = [];
-
-    authors.forEach((valueAuthor, keyAuthor) => {
-
-        var amount = 1;
-        var books = new Array();
-        var authorName = "";
-
-        //console.log("authors", authors.size);
-        if (authors.size > 30) {
-            if (valueAuthor.length == 1) {
-                authorName = "Authors";
-                var index = pieData.filter(function (x) { return x.Author == authorName });
-
-                if (index.length == 0) {
-                    authorByBook.push({
-                        Author: valueAuthor[0].Author,
-                        Book: valueAuthor[0].title
-                    });
-
-                    pieData.push({
-                        Author: authorName,
-                        Amount: amount,
-                        Books: books,
-                        AuthorByBook: authorByBook,
-                    });
-                }
-                else {
-                    index[0].Amount = index[0].Amount + 1;
-
-                    authorByBook = index[0].AuthorByBook;
-                    authorByBook.push({
-                        Author: valueAuthor[0].Author,
-                        Book: valueAuthor[0].title
-                    });
-                }
-            }
-            else {
-
-                valueAuthor.forEach((valueAuthor1, keyAuthor1) => {
-
-                    authorName = valueAuthor1.Author;
-
-                    //if (amount <= valueAuthor.length) {
-                    books.push(valueAuthor1.title);
-                    //}
-                    amount = valueAuthor.length;
-                });
-                pieData.push({
-                    Author: authorName,
-                    Amount: amount,
-                    Books: books,
-                    AuthorByBook: authorByBook,
-                });
-            }
-        }
-        else {
-            valueAuthor.forEach((valueAuthor1, keyAuthor1) => {
-
-                authorName = valueAuthor1.Author;
-
-                //if (amount <= valueAuthor.length) {
-                books.push(valueAuthor1.title);
-                //}
-                amount = valueAuthor.length;
-            });
-            pieData.push({
-                Author: authorName,
-                Amount: amount,
-                Books: books,
-                AuthorByBook: authorByBook,
-            });
-        }
-    });
-    //console.log("pieData", pieData);
-    return pieData;
+//#region  Communication between charts
+function handleMouseOver(item) {
+    d3.selectAll(".itemValue")
+        .filter(function (d, i) {
+            return d.title == item.title;
+        })
+        .attr("r", 10)
+        .style("fill", "red");
 }
-
-
-/*************************************** End --> Pie plot ***************************************/
+//#endregion

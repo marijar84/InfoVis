@@ -49,11 +49,11 @@
 
           <div class="col">
             <div class="rating">
-              <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-              <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
-              <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-              <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-              <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+              <input type="radio" name="rating" value="5" id="5" onclick="ratingclick(value)"><label for="5">☆</label>
+              <input type="radio" name="rating" value="4" id="4" onclick="ratingclick(value)"><label for="4">☆</label>
+              <input type="radio" name="rating" value="3" id="3"onclick="ratingclick(value)"><label for="3">☆</label>
+              <input type="radio" name="rating" value="2" id="2" onclick="ratingclick(value)" ><label for="2">☆</label>
+              <input type="radio" name="rating" value="1" id="1" onclick="ratingclick(value)"><label for="1">☆</label>
             </div>
           </div>
 
@@ -71,23 +71,32 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div id="sankeyChart"></div>
       </div>
-      
+
       <div class="col-md-4">
         <div class="row">
           <div id="my_dataviz"></div>
         </div>
-        <div class="row">
-          
+        <div class="row">          
+          <div class="row">
+            <div class="col">Publisher</div>  
+            <div class="col">
+              <div class="dropdown">
+                <select id='publishers' onmousedown="this.value='';" onchange="selectDropDownPublishers(this.value);">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div id="unitchart"></div>
+          </div>          
         </div>
       </div>
     </div>
   </div>
-  <div id="pieChart"></div>
-
 </body>
 
 </html>
