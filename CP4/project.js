@@ -542,9 +542,6 @@ function handleMouseOver(item) {
         })
         .attr("r", 10)
         .style("fill", "red")
-        tooltip.html(i.title + "<br/> Author: " + i.author + "<br/>" + i.value)
-                .style("left", (d.pageX) + "px")
-                .style("top", (d.pageY) - 28 + "px");
 }
 
 function handleMouseLeave() {
