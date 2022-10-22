@@ -136,6 +136,13 @@ function sankeyChart(data) {
 
 function scatterPlot(data) {
 
+    var regressionPoints = getSpearmanLinearRegression(data);
+
+    var div = d3.select("body").append("div")
+        .attr("id", "popupdiv")
+        .attr("class", "title")
+        .style("opacity", 0);
+
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
@@ -151,9 +158,11 @@ function scatterPlot(data) {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+    var minValue = d3.min(data, (d) => Math.round(parseFloat(d.rating), -2));
+
     // Scales
     var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([1, width])
-    var yScale = d3.scaleLinear().domain([0, 5]).range([0, width]).range([height, 0]);
+    var yScale = d3.scaleLinear().domain([minValue, 5]).range([0, width]).range([height, 0]);
 
     // Title
     svg.append('text')
@@ -161,8 +170,8 @@ function scatterPlot(data) {
         .attr('y', 10)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
-        .style('font-size', 20)
-        .text('Scatter Plot');
+        .style('font-size', 15)
+        .text('Rating vs. Number of Awards');
 
     // X label
     svg.append('text')
@@ -176,10 +185,10 @@ function scatterPlot(data) {
     // Y label
     svg.append('text')
         .attr('text-anchor', 'middle')
-        .attr('transform', 'translate(0,45)rotate(-90)')
+        .attr('transform', 'translate(-35,45)rotate(-90)')
         .style('font-family', 'Helvetica')
         .style('font-size', 12)
-        .text('Liked Percentage');
+        .text('Rating');
 
     // Create X axis
     svg.append("g")
@@ -193,9 +202,14 @@ function scatterPlot(data) {
         .attr("transform", "translate(0,0)")
         .call(d3.axisLeft(yScale));
 
+    //Line Spearman
+    line = d3.line()
+        .x(d => xScale(d.x))
+        .y(d => yScale(d.y))
+
     // Create dots
     svg.append('g')
-        .selectAll("dots") 
+        .selectAll("dots")
         .data(data, (d) => d.title)
         .join("circle")
         .attr("class", "dots itemValue")
@@ -204,9 +218,58 @@ function scatterPlot(data) {
         .attr("r", 2)
         .style("fill", "#EDCA3A")
         .on("mouseover", (event, d) => handleMouseOver(d))
-        .on("mouseleave", (event, d) =>  handleMouseLeave())
+        .on("mouseleave", (event, d) => handleMouseLeave())
         .append("title")
         .html((d) => d.title + ", Author: " + d.Author);
+
+    svg.append('path')
+        .classed('regressionLine', true)
+        .datum(regressionPoints)
+        .attr('d', line)
+        .style("stroke", "#43A047")
+        .style("fill", "none")
+        .style("stroke-width", 2)
+        .style("stroke-dasharray", 2);
+}
+
+function getSpearmanLinearRegression(data) {
+    var ratingVsAward = [];
+
+    data.sort(function (x, y) {
+        return x.awards - y.awards;
+    });
+
+
+    data.forEach(function (d) {
+        ratingVsAward.push({
+            x: +d.awards,
+            y: +d.rating
+        });
+    });
+
+    var linearRegression1 = linearRegressionfunction(ratingVsAward);
+
+    linearRegressionLine = ss.linearRegressionLine(linearRegression1);
+
+    var regressionPoints = [];
+
+    const firstX = ratingVsAward[0].x;
+    const lastX = ratingVsAward.slice(-1)[0].x;
+    const xCoordinates = [firstX, lastX];
+
+    for (var i = 0; i < xCoordinates.length; i++) {
+        console.log(xCoordinates[i]);
+        regressionPoints.push({
+            x: xCoordinates[i],
+            y: linearRegressionLine(xCoordinates[i])
+        })
+    }
+    return regressionPoints;
+}
+
+function linearRegressionfunction(initialData) {
+    return ss.linearRegression(initialData.map(d => [d.x, d.y]));
+
 }
 //#endregion
 
@@ -291,6 +354,23 @@ function unitChart(data) {
         .attr("id", "gUnitChart")
         .attr("transform",
             `translate(${margin.left}, ${margin.top})`);
+
+    svg.append('text')
+        .attr('x', width / 2)
+        .attr('y', 10)
+        .attr('text-anchor', 'middle')
+        .style('font-family', 'Helvetica')
+        .style('font-size', 15)
+        .style("align", 'left')
+        .text('Published books per year');
+
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", -10)
+        .attr("y", height + margin.top - 10)
+        .style('font-family', 'Helvetica')
+        .style('font-size', 12)
+        .text("Years");
 
     const x = d3.scaleLinear()
         .rangeRound([0, width])
@@ -379,158 +459,7 @@ function unitChart(data) {
 //#endregion
 
 //#region Update charts
-function updateUnitChar(data) {
-    var div = d3.select("body").append("div")
-        .attr("class", "title")
-        .style("opacity", 0);
-
-    const svg = d3.select("#gUnitChart");
-
-    const x = d3.scaleLinear()
-        .rangeRound([0, width])
-        .domain(d3.extent(data, (d) => parseFloat(d.publishDate))).range([0, width]);
-
-    //console.log("svg", svg);
-
-    svg.attr("id", "gXAxis")
-        .call(d3.axisBottom(x));
-
-    //histogram binning
-    const histogram = d3.histogram()
-        .domain(x.domain())
-        .thresholds(x.ticks(nbins))
-        .value(function (d) { return parseInt(d.publishDate); })
-
-    //binning data and filtering out empty bins
-    const bins = histogram(data).filter(d => d.length > 0);
-    //console.log("bin", bins);
-
-    //g container for each bin
-    let binContainer = svg.selectAll(".gBin")
-        .data(bins);
-
-    binContainer.exit().remove()
-
-    let binContainerEnter = binContainer.enter()
-        .append("g")
-        .attr("class", "gBin")
-        .attr("transform", d => `translate(${x(d.x0)}, ${height})`)
-
-    //need to populate the bin containers with data the first time
-    binContainerEnter.selectAll("circle.circleValue")
-        .data(d => d.map((p, i) => {
-            return {
-                idx: i,
-                title: p.title,
-                value: parseInt(p.publishDate),
-                radius: (x(d.x1) - x(d.x0)) / 2
-            }
-        }))
-        .enter()
-        .append("circle")
-        .attr("class", "circleValue itemValue")
-        .attr("class", "enter")
-        .attr("cx", 0) //g element already at correct x pos
-        .attr("cy", function (d) {
-            return - d.idx * 2 * d.radius - d.radius;
-        })
-        .attr("r", 0)
-        .on("mouseover", function (d, i) {
-            const [x, y] = d3.pointer(d);
-            d3.select(this).transition()
-                .duration('100')
-                .attr("r", 7)
-                .style("fill", "red");
-            div.transition()
-                .duration(100)
-                .style("opacity", 1);
-            div.html(i.title)
-                .style("left", (x + 50) + "px")
-                .style("top", (y + 100) + "px");
-            handleMouseOver(i);
-        })
-        .on('mouseleave', function (d, i) {
-            d3.select(this).transition()
-                .duration('200')
-                .attr("r", 5)
-                .style("fill", "#EDCA3A");
-            div.transition()
-                .duration('200')
-                .style("opacity", 0);
-            handleMouseLeave();
-        })
-        .transition()
-        .duration(500)
-        .attr("r", function (d) {
-            return (d.length == 0) ? 0 : d.radius;
-        })
-
-    binContainerEnter.merge(binContainer)
-        .attr("transform", d => `translate(${x(d.x0)}, ${height})`)
-
-    let dots = binContainer.selectAll("circle")
-        .data(d => d.map((p, i) => {
-            return {
-                idx: i,
-                title: p.title,
-                value: parseInt(p.publishDate),
-                radius: (x(d.x1) - x(d.x0)) / 2
-            }
-        }))
-
-    const t = d3.transition()
-        .duration(1000);
-
-    dots.exit()
-        //.attr("class", "exit")
-        .transition(t)
-        .attr("r", 0)
-        .remove();
-
-    //dots.attr("class", "update");
-
-    dots.enter()
-        .append("circle")
-        .attr("class", "enter")
-        .attr("class", "circleValue itemValue")
-        .attr("cx", 0) //g element already at correct x pos
-        .attr("cy", function (d) {
-            return - d.idx * 2 * d.radius - d.radius;
-        })
-        .attr("r", 0)
-        .merge(dots)
-        .on("mouseover", function (d, i) {
-            const [x, y] = d3.pointer(d);
-            d3.select(this).transition()
-                .duration('100')
-                .attr("r", 7)
-                .style("fill", "red");
-            div.transition()
-                .duration(100)
-                .style("opacity", 1);
-            div.html(i.title)
-                .style("left", (x + 50) + "px")
-                .style("top", (y + 100) + "px");
-            handleMouseOver(i);
-        })
-        .on('mouseleave', function (d, i) {
-            d3.select(this).transition()
-                .duration('200')
-                .attr("r", 5)
-                .style("fill", "#EDCA3A");
-            div.transition()
-                .duration('200')
-                .style("opacity", 0);
-
-            handleMouseLeave();
-        })
-        .transition()
-        .duration(500)
-        .attr("r", function (d) {
-            //console.log("d.len ", d.length)
-            return (d.length == 0) ? 0 : d.radius;
-        })
-}
+function updateUnitChar(data) { }
 //#endregion
 
 //#region  Communication between charts

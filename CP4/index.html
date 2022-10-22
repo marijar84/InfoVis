@@ -27,6 +27,8 @@
   <script src="./js/jquery-3.6.0.js"></script>
   <script src="./js/jquery-ui.js"></script>
 
+  <script src="./js/simple-statistics.js"></script>
+
   <script src="./js/bootstrap.min.js"></script>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -45,9 +47,9 @@
         <div class="container-fluid">
         <table style="width: 100%">
           <tr>
-            <td>Rating</td>
-            <td>Genre</td>
-            <td>Year range</td>
+            <td style="font-size: 14px">Rating</td>
+            <td style="font-size: 14px">Genre</td>
+            <td style="font-size: 14px">Year range</td>
           </tr>
           <tr>
             <td>
@@ -65,7 +67,7 @@
               </div>
             </td>
             <td>
-              <div class="dropdown">
+              <div class="dropdown" style="font-size: 14px">
                 <select id='genres' onmousedown="this.value='';" onchange="selectDropDown(this.value);">
                 </select>
               </div>
@@ -91,12 +93,13 @@
       </div>
       
       <div class="row" id="unit" style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
-        <div>Author</div>
-        <div class="dropdown">
+        <div style="font-size: 12px">Authors</div>
+        <div class="dropdown" style="font-size: 12px">
           <select id='authors' onmousedown="this.value='';" onchange="selectDropDownAuthor(this.value);">
           </select>
         </div>
         <div id="unitchart"></div>
+        <div id="unitchart2"></div>
       </div>
     </div>
 
