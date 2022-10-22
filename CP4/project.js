@@ -162,7 +162,7 @@ function scatterPlot(data) {
 
     // Scales
     var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([1, width])
-    var yScale = d3.scaleLinear().domain([minValue, 5]).range([0, width]).range([height, 0]);
+    var yScale = d3.scaleLinear().domain([0, 5]).range([0, width]).range([height, 0]);
 
     // Title
     svg.append('text')
