@@ -136,10 +136,6 @@ function sankeyChart(data) {
 
 function scatterPlot(data) {
 
-    var div = d3.select("body").append("div")
-        .attr("class", "title")
-        .style("opacity", 0);
-
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
@@ -157,7 +153,7 @@ function scatterPlot(data) {
 
     // Scales
     var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([1, width])
-    var yScale = d3.scaleLinear().domain([3, 5]).range([0, width]).range([height, 0]);
+    var yScale = d3.scaleLinear().domain([0, 5]).range([0, width]).range([height, 0]);
 
     // Title
     svg.append('text')
@@ -199,40 +195,18 @@ function scatterPlot(data) {
 
     // Create dots
     svg.append('g')
-        .selectAll("dot.dotValue")
-        .data(data)
-        .enter()
-        .append("circle")
-        .attr("class", "dotValue itemValue")
+        .selectAll("dots") 
+        .data(data, (d) => d.title)
+        .join("circle")
+        .attr("class", "dots itemValue")
         .attr("cx", (d) => xScale(parseFloat(d.awards)))
         .attr("cy", (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
         .style("fill", "blue")
-        .on("mouseover", function (d, i) {
-            const [x, y] = d3.pointer(d);
-            d3.select(this).transition()
-                .duration('100')
-                .attr("r", 7)
-                .style("fill", "red");
-            div.transition()
-                .duration(100)
-                .style("opacity", 1);
-            div.html(i.title)
-                .style("left", d.pageX + "px")
-                .style("top", d.pageY + "px");
-
-        })
-        .on('mouseleave', function (d, i) {
-            d3.select(this).transition()
-                .duration('200')
-                .attr("r", 2)
-                .style("fill", "blue");
-            div.transition()
-                .duration('200')
-                .style("opacity", 0);
-
-            handleMouseLeave();
-        });
+        .on("mouseover", (event, d) => handleMouseOver(d))
+        .on("mouseleave", (event, d) =>  handleMouseLeave())
+        .append("title")
+        .text((d) => d.title);
 }
 //#endregion
 
@@ -283,7 +257,7 @@ function selectDropDownAuthor(value) {
 
     //Remove missing values
     var dataFilter = csvdata.filter(function (d) { return d.Author == value });
-    console.log(dataFilter);
+    //console.log(dataFilter);
 
     updateUnitChar(dataFilter);
 }
@@ -299,10 +273,10 @@ let tooltip;
 const nbins = 50;
 
 function unitChart(data) {
-    console.log("width", width);
+    //console.log("width", width);
 
-    console.log("height", height);
-    console.log("data", data);
+    //console.log("height", height);
+    //console.log("data", data);
 
     tooltip = d3.select("body").append("div")
         .attr("class", "title")
@@ -336,7 +310,7 @@ function unitChart(data) {
 
     //binning data and filtering out empty bins
     const bins = histogram(data).filter(d => d.length > 0);
-    console.log("bin", bins);
+    //console.log("bin", bins);
 
     //g container for each bin
     let binContainer = svg.selectAll(".gBin")
@@ -398,7 +372,8 @@ function unitChart(data) {
         .duration(500)
         .attr("r", function (d) {
             return (d.length == 0) ? 0 : d.radius;
-        })
+        });
+
 }
 
 //#endregion
@@ -415,7 +390,7 @@ function updateUnitChar(data) {
         .rangeRound([0, width])
         .domain(d3.extent(data, (d) => parseFloat(d.publishDate))).range([0, width]);
 
-    console.log("svg", svg);
+    //console.log("svg", svg);
 
     svg.attr("id", "gXAxis")
         .call(d3.axisBottom(x));
@@ -428,7 +403,7 @@ function updateUnitChar(data) {
 
     //binning data and filtering out empty bins
     const bins = histogram(data).filter(d => d.length > 0);
-    console.log("bin", bins);
+    //console.log("bin", bins);
 
     //g container for each bin
     let binContainer = svg.selectAll(".gBin")
@@ -536,7 +511,6 @@ function updateUnitChar(data) {
             div.html(i.title)
                 .style("left", (x + 50) + "px")
                 .style("top", (y + 100) + "px");
-
             handleMouseOver(i);
         })
         .on('mouseleave', function (d, i) {
@@ -553,7 +527,7 @@ function updateUnitChar(data) {
         .transition()
         .duration(500)
         .attr("r", function (d) {
-            console.log("d.len ", d.length)
+            //console.log("d.len ", d.length)
             return (d.length == 0) ? 0 : d.radius;
         })
 }
@@ -561,7 +535,7 @@ function updateUnitChar(data) {
 
 //#region  Communication between charts
 function handleMouseOver(item) {
-    console.log("d", item)
+   // console.log("d", item)
 
     d3.selectAll(".itemValue")
         .filter(function (d, i) {
@@ -573,7 +547,6 @@ function handleMouseOver(item) {
 
 function handleMouseLeave() {
     d3.selectAll(".itemValue").transition()
-        .duration('200')
         .attr("r", 2)
         .style("fill", "blue");
 }
