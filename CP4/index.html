@@ -4,17 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CP4</title>
-  <style> .title {
-    position: absolute;
-    vertical-align: middle;
-     text-align: center;
-     padding: .2rem;
-     background: #313639;
-     color: #f9f9f9;
-     border: 0px;
-     border-radius: 8px;
-     pointer-events: none;
-     font-size: .7rem;}
+  <style>
+    .title {
+      position: absolute;
+      vertical-align: middle;
+      text-align: center;
+      padding: .2rem;
+      background: #313639;
+      color: #f9f9f9;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+      font-size: .7rem;
+    }
   </style>
 
   <link rel="stylesheet" href="./css/font-awesome.min.css">
@@ -35,68 +37,71 @@
   </script>
 </head>
 
-<body onload="init()">
-  <div class="container-fluid">
-    <h1>Best Seller Books</h1>
-  </div>
+<body onload="init()" style="background: rgb(234, 232, 232);" >
 
-  <div>
-    <div class="row">
-      <div class="col-md-8">
-        <div class="row" style="border: 1px;">
-          <div class="col mx-auto">Rating
-          </div>
-
-          <div class="col">
-            <div class="rating">
-              <input type="radio" name="rating" value="5" id="5" onclick="ratingclick(value)"><label for="5">☆</label>
-              <input type="radio" name="rating" value="4" id="4" onclick="ratingclick(value)"><label for="4">☆</label>
-              <input type="radio" name="rating" value="3" id="3"onclick="ratingclick(value)"><label for="3">☆</label>
-              <input type="radio" name="rating" value="2" id="2" onclick="ratingclick(value)" ><label for="2">☆</label>
-              <input type="radio" name="rating" value="1" id="1" onclick="ratingclick(value)"><label for="1">☆</label>
-            </div>
-          </div>
-
-          <div class="col">Genre
-          </div>
-
-          <div class="col">
-            <div class="dropdown">
-              <select id='genres' onmousedown="this.value='';" onchange="selectDropDown(this.value);">
-              </select>
-            </div>
-          </div>
-          <div class="col">
-            <div id="slider-range"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div id="sankeyChart"></div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="row">
-          <div id="my_dataviz"></div>
-        </div>
-        <div class="row">          
-          <div class="row">
-            <div class="col">Publisher</div>  
-            <div class="col">
+  <div class="row">    
+    <div class="col-md-7 float-md-left" id="leftColumn" style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; background: rgb(255, 255, 255);">
+      <div class="row" id="filter">
+        <div class="container-fluid">
+        <table style="width: 100%">
+          <tr>
+            <td>Rating</td>
+            <td>Genre</td>
+            <td>Year range</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="rate">
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5" title="text">5 stars</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4" title="text">4 stars</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3" title="text">3 stars</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2" title="text">2 stars</label>
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1" title="text">1 star</label>
+              </div>
+            </td>
+            <td>
               <div class="dropdown">
-                <select id='publishers' onmousedown="this.value='';" onchange="selectDropDownPublishers(this.value);">
+                <select id='genres' onmousedown="this.value='';" onchange="selectDropDown(this.value);">
                 </select>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div id="unitchart"></div>
-          </div>          
+            </td>
+            <td>
+              <div id="slider-range"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      </div>
+
+      <div class="row" id="sankey">
+        
+        <img src="sankey.png" class="center" alt="Best-Sellers" width="350px" height="450px" style="margin-top: 25px">
+      </div>
+
+    </div>
+
+    <div class="col-md-5 float-md-rigth" id="rightColumn" style="padding-left: 17px;">
+      <div class="row" id="scatter"  style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px; margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
+        <div id="my_dataviz"></div>
+      </div>
+      
+      <div class="row" id="unit" style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
+        <div>Author</div>
+        <div class="dropdown">
+          <select id='authors' onmousedown="this.value='';" onchange="selectDropDownAuthor(this.value);">
+          </select>
         </div>
+        <div id="unitchart"></div>
       </div>
     </div>
+
   </div>
+
 </body>
 
 </html>
