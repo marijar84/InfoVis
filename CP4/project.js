@@ -202,11 +202,11 @@ function scatterPlot(data) {
         .attr("cx", (d) => xScale(parseFloat(d.awards)))
         .attr("cy", (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
-        .style("fill", "blue")
+        .style("fill", "#EDCA3A")
         .on("mouseover", (event, d) => handleMouseOver(d))
         .on("mouseleave", (event, d) =>  handleMouseLeave())
         .append("title")
-        .text((d) => d.title);
+        .html((d) => d.title + ", Author: " + d.Author);
 }
 //#endregion
 
@@ -535,19 +535,21 @@ function updateUnitChar(data) {
 
 //#region  Communication between charts
 function handleMouseOver(item) {
-   // console.log("d", item)
 
     d3.selectAll(".itemValue")
         .filter(function (d, i) {
             return d.title == item.title;
         })
         .attr("r", 10)
-        .style("fill", "red");
+        .style("fill", "red")
+        tooltip.html(i.title + "<br/> Author: " + i.author + "<br/>" + i.value)
+                .style("left", (d.pageX) + "px")
+                .style("top", (d.pageY) - 28 + "px");
 }
 
 function handleMouseLeave() {
     d3.selectAll(".itemValue").transition()
         .attr("r", 2)
-        .style("fill", "blue");
+        .style("fill", "#EDCA3A");
 }
 //#endregion
