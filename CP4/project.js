@@ -357,7 +357,7 @@ function unitChart(data) {
         height = 280 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
-    var svg = d3.select("#unitchart2")
+    var svg = d3.select("#unitchart")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
