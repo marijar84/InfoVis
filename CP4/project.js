@@ -257,8 +257,7 @@ function getSpearmanLinearRegression(data) {
     const lastX = ratingVsAward.slice(-1)[0].x;
     const xCoordinates = [firstX, lastX];
 
-    for (var i = 0; i < xCoordinates.length; i++) {
-        console.log(xCoordinates[i]);
+    for (var i = 0; i < xCoordinates.length; i++) {        
         regressionPoints.push({
             x: xCoordinates[i],
             y: linearRegressionLine(xCoordinates[i])
@@ -325,141 +324,109 @@ function selectDropDownAuthor(value) {
     updateUnitChar(dataFilter);
 }
 //#endregion
-
-const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    width = 550 - margin.left - margin.right,
-    height = 230 - margin.top - margin.bottom;
-
 //tooltip
 let tooltip;
 
-const nbins = 50;
-
 function unitChart(data) {
-    //console.log("width", width);
-
-    //console.log("height", height);
-    //console.log("data", data);
 
     tooltip = d3.select("body").append("div")
         .attr("class", "title")
         .style("opacity", 0);
 
     //set up svg
-    var svg = d3.select("#unitchart")
+    var grouped_data = d3.group(data, d => d.publishDate);
+
+    var newData = [];
+
+    grouped_data.forEach(element => {
+
+        for (var i = 0; i < element.length; i++) {
+            if (element[i].publishDate !== "Missing") {
+                newData.push({
+                    title: element[i].title,
+                    publishDate: element[i].publishDate,
+                    author: element[i].Author,
+                    position: i
+                });
+            }
+        }
+    });    
+
+    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+        width = 520 - margin.left - margin.right,
+        height = 280 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("#unitchart2")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("id", "gUnitChart")
+        .attr("id", "gScatterPlot")
         .attr("transform",
-            `translate(${margin.left}, ${margin.top})`);
+            "translate(" + margin.left + "," + margin.top + ")");
 
+    var minValue = d3.min(newData, (d) => Math.round(parseInt(d.position), -2));
+    var maxValue = d3.max(newData, (d) => Math.round(parseInt(d.position), -2));
+
+    // Scales
+    var xScale = d3.scaleLinear().domain(d3.extent(newData, (d) => parseFloat(d.publishDate))).range([1, width])
+    var yScale = d3.scaleLinear().domain([minValue, maxValue]).range([0, width]).range([height, 0]);
+
+    // Title
     svg.append('text')
         .attr('x', width / 2)
         .attr('y', 10)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
         .style('font-size', 15)
-        .style("align", 'left')
-        .text('Published books per year');
+        .text('Published books per Year');
 
-    svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", -10)
-        .attr("y", height + margin.top - 10)
+    // X label
+    svg.append('text')
+        .attr('x', width / 2 + 220)
+        .attr('y', height + 30)
+        .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
         .style('font-size', 12)
-        .text("Years");
+        .text('Years');
 
-    const x = d3.scaleLinear()
-        .rangeRound([0, width])
-    x.domain(d3.extent(data, (d) => parseFloat(d.publishDate))).range([0, width]);
-
+    // Create X axis
     svg.append("g")
-        .attr("id", "gXAxis")
-        .attr("class", "axis axis--x")
+        .attr("id", "gScatterPlot")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(xScale));
 
-    //histogram binning
-    const histogram = d3.histogram()
-        .domain(x.domain())
-        .thresholds(x.ticks(nbins))
-        .value(function (d) { return parseInt(d.publishDate); })
+    // Create Y axis
+    svg.append("g")
+        .attr("id", "gYAxis")
+        .attr("transform", "translate(0,0)")
+        .call(d3.axisLeft(yScale))
+        .attr("opacity", "0");
 
-    //binning data and filtering out empty bins
-    const bins = histogram(data).filter(d => d.length > 0);
-    //console.log("bin", bins);
-
-    //g container for each bin
-    let binContainer = svg.selectAll(".gBin")
-        .data(bins);
-
-    binContainer.exit().remove()
-
-    let binContainerEnter = binContainer.enter()
-        .append("g")
-        .attr("class", "gBin")
-        .attr("transform", d => `translate(${x(d.x0)}, ${height})`)
-
-    //need to populate the bin containers with data the first time
-    binContainerEnter.selectAll("circle.circleValue")
-        .data(d => d.map((p, i) => {
-            return {
-                idx: i,
-                title: p.title,
-                value: parseInt(p.publishDate),
-                author: p.Author,
-                radius: (x(d.x1) - x(d.x0)) / 2
-            }
-        }))
-        .enter()
-        .append("circle")
-        .attr("class", "circleValue itemValue")
-        .attr("class", "enter")
-        .attr("cx", 0) //g element already at correct x pos
-        .attr("cy", function (d) {
-            return - d.idx * 2 * d.radius - d.radius;
-        })
-        .attr("r", 0)
-        .on("mouseover", function (d, i) {
-            const [x, y] = d3.pointer(d);
-            d3.select(this).transition()
-                .duration('100')
-                .attr("r", 7)
-                .style("fill", "red");
-            tooltip.transition()
-                .duration(100)
-                .style("opacity", 1);
-            tooltip.html(i.title + "<br/> Author: " + i.author + "<br/>" + i.value)
-                .style("left", (d.pageX) + "px")
-                .style("top", (d.pageY) - 28 + "px");
-
-            handleMouseOver(i);
-        })
-        .on('mouseleave', function (d, i) {
-            d3.select(this).transition()
-                .duration('200')
-                .attr("r", 4)
-                .style("fill", "#EDCA3A");
-            tooltip.transition()
-                .duration('200')
-                .style("opacity", 0);
-            handleMouseLeave();
-        })
-        .transition()
-        .duration(500)
-        .attr("r", function (d) {
-            return (d.length == 0) ? 0 : d.radius;
-        });
-
+    // Create dots
+    svg.append('g')
+        .selectAll("dots")
+        .data(newData, (d) => d.title)
+        .join("circle")
+        .attr("class", "dots itemValue")
+        .attr("cx", (d) => xScale(parseFloat(d.publishDate)))
+        .attr("cy", (d) => yScale(parseFloat(d.position)) - 5)
+        .attr("r", 4)
+        .style("fill", "#EDCA3A")
+        .on("mouseover", (event, d) => handleMouseOver(d))
+        .on("mouseleave", (event, d) => handleMouseLeave())
+        .append("title")
+        .html((d) => d.title + ", Author: " + d.author + ", " + d.publishDate);
 }
+
 
 //#endregion
 
 //#region Update charts
-function updateUnitChar(data) { }
+function updateUnitChar(data) {
+
+}
 //#endregion
 
 //#region  Communication between charts
@@ -475,7 +442,7 @@ function handleMouseOver(item) {
 
 function handleMouseLeave() {
     d3.selectAll(".itemValue").transition()
-        .attr("r", 2)
+        .attr("r", 4)
         .style("fill", "#EDCA3A");
 }
 //#endregion
