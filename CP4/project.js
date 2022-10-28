@@ -410,6 +410,7 @@ function unitChart(data) {
         .data(newData, (d) => d.title)
         .join("circle")
         .attr("class", "dots itemValue")
+        .attr("class", "dots itemValueUnitChart")
         .attr("cx", (d) => xScale(parseFloat(d.publishDate)))
         .attr("cy", (d) => yScale(parseFloat(d.position)) - 5)
         .attr("r", 4)
@@ -438,11 +439,23 @@ function handleMouseOver(item) {
         })
         .attr("r", 10)
         .style("fill", "red")
+
+        d3.selectAll(".itemValueUnitChart").filter(function (d, i) {
+            return d.title == item.title;
+        })
+        .attr("r", 10)
+        .style("fill", "red")
 }
 
 function handleMouseLeave() {
     d3.selectAll(".itemValue").transition()
+        .attr("r", 2)
+        .style("fill", "#EDCA3A");
+
+        d3.selectAll(".itemValueUnitChart").transition()
         .attr("r", 4)
         .style("fill", "#EDCA3A");
+
+
 }
 //#endregion
