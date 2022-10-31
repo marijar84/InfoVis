@@ -257,7 +257,7 @@ function getSpearmanLinearRegression(data) {
     const lastX = ratingVsAward.slice(-1)[0].x;
     const xCoordinates = [firstX, lastX];
 
-    for (var i = 0; i < xCoordinates.length; i++) {        
+    for (var i = 0; i < xCoordinates.length; i++) {
         regressionPoints.push({
             x: xCoordinates[i],
             y: linearRegressionLine(xCoordinates[i])
@@ -315,25 +315,7 @@ function removeduplicate_author() {
     });
 }
 
-function selectDropDownAuthor(value) {
-
-    //Remove missing values
-    var dataFilter = csvdata.filter(function (d) { return d.Author == value });
-    //console.log(dataFilter);
-
-    updateUnitChar(dataFilter);
-}
-//#endregion
-//tooltip
-let tooltip;
-
-function unitChart(data) {
-
-    tooltip = d3.select("body").append("div")
-        .attr("class", "title")
-        .style("opacity", 0);
-
-    //set up svg
+function groupDataByPublishedDate(data) {
     var grouped_data = d3.group(data, d => d.publishDate);
 
     var newData = [];
@@ -350,7 +332,38 @@ function unitChart(data) {
                 });
             }
         }
-    });    
+    });
+    return newData;
+}
+
+function selectDropDownAuthor(value) {
+
+    if (value == "All Authors") {
+        updateUnitChar(groupDataByPublishedDate(csvdata));
+    }
+    else {
+        //Remove missing values
+        var dataFilter = csvdata.filter(function (d) { return d.Author == value });
+
+        var newValues = groupDataByPublishedDate(dataFilter);
+
+        updateUnitChar(newValues);
+    }
+}
+//#endregion
+//tooltip
+let tooltip;
+
+
+
+function unitChart(data) {
+
+    tooltip = d3.select("body").append("div")
+        .attr("class", "title")
+        .style("opacity", 0);
+
+    //set up svg
+    var newData = groupDataByPublishedDate(data);
 
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
@@ -362,7 +375,7 @@ function unitChart(data) {
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
-        .attr("id", "gScatterPlot")
+        .attr("id", "gUnitChart")
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
@@ -371,7 +384,7 @@ function unitChart(data) {
 
     // Scales
     var xScale = d3.scaleLinear().domain(d3.extent(newData, (d) => parseFloat(d.publishDate))).range([1, width])
-    var yScale = d3.scaleLinear().domain([minValue, maxValue]).range([0, width]).range([height, 0]);
+    var yScale = d3.scaleLinear().domain([minValue, maxValue]).range([height, 0]);
 
     // Title
     svg.append('text')
@@ -391,11 +404,13 @@ function unitChart(data) {
         .style('font-size', 12)
         .text('Years');
 
+
     // Create X axis
     svg.append("g")
-        .attr("id", "gScatterPlot")
+        .attr("id", "gXAxis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale));
+        .call(d3.axisBottom(xScale).tickFormat((x) => x));
+
 
     // Create Y axis
     svg.append("g")
@@ -405,8 +420,8 @@ function unitChart(data) {
         .attr("opacity", "0");
 
     // Create dots
-    svg.append('g')
-        .selectAll("dots")
+    svg
+        .selectAll("circle")
         .data(newData, (d) => d.title)
         .join("circle")
         .attr("class", "dots itemValue")
@@ -427,6 +442,72 @@ function unitChart(data) {
 //#region Update charts
 function updateUnitChar(data) {
 
+    var newData = data;
+
+    const svg = d3.select("#gUnitChart");
+
+    const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+        width = 520 - margin.left - margin.right,
+        height = 280 - margin.top - margin.bottom;
+
+    const minValue = d3.min(newData, (d) => Math.round(parseInt(d.position), -2));
+    var maxValue = d3.max(newData, (d) => Math.round(parseInt(d.position), -2));
+
+    // Scales
+    const xScale = d3.scaleLinear().domain(d3.extent(newData, (d) => parseFloat(d.publishDate))).range([1, width])
+    const yScale = d3.scaleLinear().domain([minValue, 26]).range([height, 0]);
+
+    var formatxAxis = d3.format('.0f');
+
+    // Create X axis
+    svg.select("#gXAxis")
+        .call(d3.axisBottom(xScale)
+        .tickFormat((x) => x));
+
+        
+
+
+    // Create Y axis
+    svg.append("g")
+        .attr("id", "gYAxis")
+        .attr("transform", "translate(0,0)")
+        .call(d3.axisLeft(yScale))
+        .attr("opacity", "0");
+
+    svg
+        .selectAll("circle")
+        .data(newData, (d) => d.title)
+        .join(
+            (enter) => {
+                circles = enter
+                    .append("circle")
+                    .attr("class", "dots itemValue")
+                    .attr("class", "dots itemValueUnitChart")
+                    .attr("cx", (d) => xScale(parseFloat(d.publishDate)))
+                    .attr("cy", (d) => yScale(0))
+                    .attr("r", 4)
+                    .style("fill", "#EDCA3A")
+                    .on("mouseover", (event, d) => handleMouseOver(d))
+                    .on("mouseleave", (event, d) => handleMouseLeave())                    
+                circles
+                    .transition()
+                    .duration(1000)
+                    .attr("cy", (d) => yScale(parseFloat(d.position)) - 5);
+                circles.append("title").text((d) => d.title);
+                circles.html((d) => d.title + ", Author: " + d.author + ", " + d.publishDate)
+            },
+            (update) => {
+                update
+                    .transition()
+                    .duration(1000)
+                    .attr("cx", (d) => xScale(parseFloat(d.publishDate)))
+                    .attr("cy", (d) => yScale(parseFloat(d.position)) - 5)
+                    .attr("r", 4);
+            },
+            (exit) => {
+                exit.remove();
+            }
+        );
 }
 //#endregion
 
@@ -440,9 +521,9 @@ function handleMouseOver(item) {
         .attr("r", 10)
         .style("fill", "red")
 
-        d3.selectAll(".itemValueUnitChart").filter(function (d, i) {
-            return d.title == item.title;
-        })
+    d3.selectAll(".itemValueUnitChart").filter(function (d, i) {
+        return d.title == item.title;
+    })
         .attr("r", 10)
         .style("fill", "red")
 }
@@ -452,7 +533,7 @@ function handleMouseLeave() {
         .attr("r", 2)
         .style("fill", "#EDCA3A");
 
-        d3.selectAll(".itemValueUnitChart").transition()
+    d3.selectAll(".itemValueUnitChart").transition()
         .attr("r", 4)
         .style("fill", "#EDCA3A");
 
