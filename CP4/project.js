@@ -503,6 +503,8 @@ function updateUnitChar(data) {
                     .attr("cx", (d) => xScale(parseFloat(d.publishDate)))
                     .attr("cy", (d) => yScale(parseFloat(d.position)) - 5)
                     .attr("r", 4);
+                    circles.append("title").text((d) => d.title);
+                    circles.html((d) => d.title + ", Author: " + d.author + ", " + d.publishDate)
             },
             (exit) => {
                 exit.remove();
