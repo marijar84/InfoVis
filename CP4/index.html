@@ -18,6 +18,29 @@
       font-size: .7rem;
     }
   </style>
+  <style>
+
+    .node rect {
+      fill-opacity: .9;
+      shape-rendering: crispEdges;
+    }
+    
+    .node text {
+      pointer-events: none;
+      text-shadow: 0 1px 0 #fff;
+    }
+    
+    .link {
+      fill: none;
+      stroke: #000;
+      stroke-opacity: .2;
+    }
+    
+    .link:hover {
+      stroke-opacity: .5;
+    }
+    
+    </style>
 
   <link rel="stylesheet" href="./css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -80,11 +103,8 @@
       </div>
       </div>
 
-      <div class="row" id="sankey">
-        
-        <img src="sankey.png" class="center" alt="Best-Sellers" width="350px" height="450px" style="margin-top: 25px">
-      </div>
-
+      <div class="row" id="sankey"></div>
+        <div id = "sankeygraph"></div>
     </div>
 
     <div class="col-md-5 float-md-rigth" id="rightColumn" style="padding-left: 17px;">
