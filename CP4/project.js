@@ -129,98 +129,238 @@ $(function () {
 
 //#region sankeyChart 
 function sankeyChart(data) {
-    //https://d3-graph-gallery.com/graph/sankey_basic.html
-    //https://bl.ocks.org/d3noob/31665aced416f27abca4fa46f5f4b568
-
+    //dataSankey(data);
     // set the dimensions and margins of the graph
-    var margin = {top: 10, right: 10, bottom: 10, left: 10},
-        width = 450 - margin.left - margin.right,
-        height = 480 - margin.top - margin.bottom;
+    var margin = { top: 20, right: 5, bottom: 10, left: 25 },
+        width = 700 - margin.left - margin.right,
+        height = 580 - margin.top - margin.bottom;
+
+    // format variables
+    var formatNumber = d3.format(",.0f"), // zero decimal places
+        format = function (d) { return formatNumber(d); },
+        color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // append the svg object to the body of the page
-    var svg = d3.select("#sankeygraph").append("svg")
+    var svg = d3.select("#sankey").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    // Color scale used
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
-
+    // Set the sankey diagram properties
     var sankey = d3.sankey()
-        .nodeWidth(36)
-        .nodePadding(40)
+        .nodeWidth(8)
+        .nodePadding(8)
         .size([width, height]);
 
     var path = sankey.links();
 
-     // Constructs a new Sankey generator with the default settings.
-    sankey
-        .nodes(data.publishDate)
-        .links(data.Author)
-        .layout(1);
+    // load the data
+    //d3.json("sankey.json").then(function (sankeydata) {
+    graph = sankey(dataSankey(data));
 
     // add in the links
-    var link = svg.append("g")
-        .selectAll(".link")
-        .data(data.Author)
-        .enter()
-        .append("path")
-            .attr("class", "link")
-            .attr("d", sankey.link() )
-            .style("stroke-width", function(d) { return Math.max(1, d.dy); })
-            .sort(function(a, b) { return b.dy - a.dy; });
+    var link = svg.append("g").selectAll(".link")
+        .data(graph.links)
+        .enter().append("path")
+        .attr("class", "link")
+        .attr("d", d3.sankeyLinkHorizontal())
+        .attr("stroke-width", 1)
+        .on("mouseover", (event, d) => handleMouseOver(d))
+        .on("mouseleave", (event, d) => handleMouseLeave());
+
+    // add the link titles
+    link.append("title")
+        .text(function (d) {
+            return d.source.name + " → " + d.target.name + "\n" +
+                "Title: " + d.title + "\n" +
+                "Author: " + d.author;
+        });
 
     // add in the nodes
-    var node = svg.append("g")
-        .selectAll(".node")
-        .data(data.publishDate)
+    var node = svg.append("g").selectAll(".node")
+        .data(graph.nodes)
         .enter().append("g")
         .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-        .call(d3.drag()
-            .subject(function(d) { return d; })
-            .on("start", function() { this.parentNode.appendChild(this); })
-            .on("drag", dragmove));
+        .style("font", "11px times")
+        .style('font-family', 'Helvetica')
+        .on("mouseover", (event, d) => handleMouseOverRect(d));
+
 
     // add the rectangles for the nodes
-    node
-    .append("rect")
-        .attr("height", function(d) { return d.dy; })
+    node.append("rect")
+        .attr("x", function (d) {
+            return d.x0;
+        })
+        .attr("y", function (d) { return d.y0; })
+        .attr("height", function (d) { return d.y1 - d.y0; })
         .attr("width", sankey.nodeWidth())
-        .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
-        .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
-    // Add hover text
+        .style("fill", "green")
+        /*function (d) {
+            return d.color = color(d.name.replace(/ .*//*, ""));
+})*/
+        .style("stroke", function (d) {
+            return d3.rgb(d.color).darker(0.1);
+        })
         .append("title")
-            .text(function(d) { return d.name + "\n" + "There is " + d.value + " stuff in this node"; });
+        .text(function (d) {
+            return d.name;
+        });
 
     // add in the title for the nodes
-    node
-        .append("text")
-        .attr("x", -6)
-        .attr("y", function(d) { return d.dy / 2; })
-        .attr("dy", ".35em")
+    node.append("text")
+        .attr("x", function (d) { return d.x0 - 6; })
+        .attr("y", function (d) { return (d.y1 + d.y0) / 2; })
+        .attr("dy", "0.5em")
         .attr("text-anchor", "end")
-        .attr("transform", null)
-        .text(function(d) { return d.name; })
-        .filter(function(d) { return d.x < width / 2; })
-        .attr("x", 6 + sankey.nodeWidth())
+        .text(function (d) { return d.name; })
+        .filter(function (d) { return d.x0 < width / 2; })
+        .attr("x", function (d) { return d.x1 + 6; })
         .attr("text-anchor", "start");
 
-     
-    function dragmove(d) {
-        d3.select(this)
-            .attr("transform",
-                "translate("
-                    + d.x + ","
-                    + (d.y = Math.max(
-                        0, Math.min(height - d.dy, d3.event.y))
-                        ) + ")");
-        sankey.relayout();
-        link.attr("d", sankey.link() );
-          }
-    }
+
+    //});
+}
+
+// the function for moving the nodes
+function dragmove(d) {
+    d3.select(this).attr("transform",
+        "translate(" + (
+            d.x = Math.max(0, Math.min(width - d.dx, d3.event.x))
+        ) + "," + (
+            d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+        ) + ")");
+    sankey.relayout();
+    link.attr("d", path);
+}
+
+function dataSankey(data) {
+    var graph = {};
+    var nodes = [];
+    var links = [];
+
+    graph.nodes = nodes;
+    graph.links = links;
+
+    var item = 0;
+
+    data.forEach(element => {
+        var genres = element.genres;
+        //Remove all special characteres    
+        genres = genres.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+        //set in an array allgenres by item      
+        var arrayGenre = genres.split(", ");
+
+        var foundYear = nodes.find(({ name }) => name === arrayGenre[0]);
+
+        if (foundYear === undefined) {
+            graph.nodes.push({
+                node: item,
+                name: arrayGenre[0]
+            });
+            item = item + 1;
+        }
+
+    });
+
+    var lastItem = nodes.slice(-1).pop();
+    item = lastItem.node + 1;
+
+    var bookFormat_grouped_data = d3.group(data, d => d.bookFormat);
+
+    bookFormat_grouped_data.forEach(element => {
+        if (element[0].bookFormat !== "Missing") {
+            graph.nodes.push({
+                node: item,
+                name: element[0].bookFormat
+            });
+            item = item + 1;
+        }
+    });
+
+    var lastItem = nodes.slice(-1).pop();
+    item = lastItem.node + 1;
+
+    graph.nodes.push({
+        node: item,
+        name: "No Series"
+    });
+
+    item = item + 1;
+
+    graph.nodes.push({
+        node: item,
+        name: "Series"
+    });
+
+    console.log("nodes", graph.nodes);
+
+
+    data.forEach(element => {
+        //console.log("element", element.publishDate);
+        if (element.genres.length > 0) {
+            var genres = element.genres;
+            //Remove all special characteres    
+            genres = genres.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+            //set in an array allgenres by item      
+            var arrayGenre = genres.split(", ");
+
+            var foundYear = nodes.find(({ name }) => name === arrayGenre[0]);
+            var source = foundYear.node;
+        }
+
+        if (element.bookFormat !== "Missing") {
+            var foundPublisher = nodes.find(({ name }) => name === element.bookFormat);
+            var target = foundPublisher.node;
+        }
+
+        if (element.bookFormat !== "Missing" || element.publishDate !== "Missing") {
+            graph.links.push({
+                source: target,
+                target: source,
+                value: 1,
+                title: element.title,
+                author: element.Author
+            });
+        }
+    });
+
+    data.forEach(element => {
+        //console.log("element", element.publishDate);
+        if (element.genres.length > 0) {
+            var genres = element.genres;
+            //Remove all special characteres    
+            genres = genres.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+            //set in an array allgenres by item      
+            var arrayGenre = genres.split(", ");
+
+            var foundYear = nodes.find(({ name }) => name === arrayGenre[0]);
+            var source = foundYear.node;
+        }
+
+        var target = "";
+        if (element.series !== "Missing") {
+            var series = nodes.find(({ name }) => name === "Series");
+            target = series.node;
+        }
+        else {
+            var series = nodes.find(({ name }) => name === "No Series");
+            target = series.node;
+        }
+
+        graph.links.push({
+            source: source,
+            target: target,
+            value: 1,
+            title: element.title,
+            author: element.Author});
+    });
+
+
+    return graph;
+
+}
 //#endregion
 
 //#region  Scatter plot 
@@ -237,7 +377,7 @@ function scatterPlot(data) {
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
-        height = 280 - margin.top - margin.bottom;
+        height = 290 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -458,7 +598,7 @@ function unitChart(data) {
 
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
-        height = 280 - margin.top - margin.bottom;
+        height = 305 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#unitchart")
@@ -553,7 +693,10 @@ function updateUnitChar(data) {
     // Create X axis
     svg.select("#gXAxis")
         .call(d3.axisBottom(xScale)
-        .tickFormat((x) => x));
+            .tickFormat((x) => x));
+
+
+
 
     // Create Y axis
     svg.append("g")
@@ -576,7 +719,7 @@ function updateUnitChar(data) {
                     .attr("r", 4)
                     .style("fill", "#EDCA3A")
                     .on("mouseover", (event, d) => handleMouseOver(d))
-                    .on("mouseleave", (event, d) => handleMouseLeave())                    
+                    .on("mouseleave", (event, d) => handleMouseLeave())
                 circles
                     .transition()
                     .duration(1000)
@@ -601,6 +744,7 @@ function updateUnitChar(data) {
 
 //#region  Communication between charts
 function handleMouseOver(item) {
+    //console.log(item);
 
     d3.selectAll(".itemValue")
         .filter(function (d, i) {
@@ -614,6 +758,12 @@ function handleMouseOver(item) {
     })
         .attr("r", 10)
         .style("fill", "red")
+
+    d3.selectAll(".link").filter(function (d, i) {
+        return d.title == item.title;
+    })
+        .style("stroke-opacity", "1")
+        .style("stroke-width", "3");
 }
 
 function handleMouseLeave() {
@@ -624,6 +774,22 @@ function handleMouseLeave() {
     d3.selectAll(".itemValueUnitChart").transition()
         .attr("r", 4)
         .style("fill", "#EDCA3A");
+
+    d3.selectAll(".link").transition()
+        .style("fill", "none")
+        .style("stroke-opacity", "0.2");
+
+}
+
+function handleMouseOverRect(item) {
+    //for(var i =0; i < item.sourceLinks.length; i++){
+    d3.selectAll(".link").filter(function (d, i) {
+        console.log("d", d);
+        return d.title == item.title;
+    })
+        .style("stroke-opacity", "1")
+        .style("stroke-width", "1.5");
+    //}
 
 
 }

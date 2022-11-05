@@ -49,7 +49,7 @@ div.tooltip {
   padding: 0;
 }
 
-g#gYAxis {}
+
 .rate {
   float: left;
   height: 46px;
@@ -86,4 +86,28 @@ g#gYAxis {}
   color: #c59b08;
 }
 
+
+
+.node rect {
+  cursor: move;
+  fill-opacity: .8;
+  shape-rendering: crispEdges;
+}
+
+.node text {
+  pointer-events: none;
+  /*text-shadow: 0 1px 0 #fff;*/
+}
+
+.link {
+  fill: none;
+  stroke: rgb(82, 82, 82);
+  stroke-opacity: .2;
+}
+
+.link:hover {
+  stroke-opacity: 1;
+  stroke-width: 1.5;
+  
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */

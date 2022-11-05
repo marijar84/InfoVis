@@ -1,0 +1,2384 @@
+{
+    "nodes": [
+        {
+            "node": 0,
+            "name": "Nonfiction"
+        },
+        {
+            "node": 1,
+            "name": "Fiction"
+        },
+        {
+            "node": 2,
+            "name": "Psychology"
+        },
+        {
+            "node": 3,
+            "name": "Cookbooks"
+        },
+        {
+            "node": 4,
+            "name": "Christian"
+        },
+        {
+            "node": 5,
+            "name": "Finance"
+        },
+        {
+            "node": 6,
+            "name": "Horror"
+        },
+        {
+            "node": 7,
+            "name": "Picture Books"
+        },
+        {
+            "node": 8,
+            "name": "Business"
+        },
+        {
+            "node": 9,
+            "name": "Poetry"
+        },
+        {
+            "node": 10,
+            "name": "Romance"
+        },
+        {
+            "node": 11,
+            "name": "Childrens"
+        },
+        {
+            "node": 12,
+            "name": "History"
+        },
+        {
+            "node": 13,
+            "name": "Classics"
+        },
+        {
+            "node": 14,
+            "name": "Young Adult"
+        },
+        {
+            "node": 15,
+            "name": "Fantasy"
+        },
+        {
+            "node": 16,
+            "name": "Mystery"
+        },
+        {
+            "node": 17,
+            "name": "Thriller"
+        },
+        {
+            "node": 18,
+            "name": "Historical Fiction"
+        },
+        {
+            "node": 19,
+            "name": "Philosophy"
+        },
+        {
+            "node": 20,
+            "name": "Self Help"
+        },
+        {
+            "node": 21,
+            "name": "Dystopia"
+        },
+        {
+            "node": 22,
+            "name": "Short Stories"
+        },
+        {
+            "node": 23,
+            "name": "Science"
+        },
+        {
+            "node": 24,
+            "name": "Sports"
+        },
+        {
+            "node": 25,
+            "name": "Politics"
+        },
+        {
+            "node": 26,
+            "name": "Humor"
+        },
+        {
+            "node": 27,
+            "name": "Christmas"
+        },
+        {
+            "node": 28,
+            "name": "Science Fiction"
+        },
+        {
+            "node": 29,
+            "name": "Animals"
+        },
+        {
+            "node": 30,
+            "name": "Biography"
+        },
+        {
+            "node": 31,
+            "name": "Music"
+        },
+        {
+            "node": 32,
+            "name": "Realistic Fiction"
+        },
+        {
+            "node": 33,
+            "name": "Graphic Novels"
+        },
+        {
+            "node": 34,
+            "name": "Middle Grade"
+        },
+        {
+            "node": 35,
+            "name": "Audiobook"
+        },
+        {
+            "node": 36,
+            "name": "Paperback"
+        },
+        {
+            "node": 37,
+            "name": "Hardcover"
+        },
+        {
+            "node": 38,
+            "name": "Kindle Edition"
+        },
+        {
+            "node": 39,
+            "name": "Board book"
+        },
+        {
+            "node": 40,
+            "name": "ebook"
+        },
+        {
+            "node": 41,
+            "name": "Audio"
+        },
+        {
+            "node": 42,
+            "name": "Capa dura"
+        },
+        {
+            "node": 43,
+            "name": "Mass Market Paperback"
+        },
+        {
+            "node": 44,
+            "name": "Audio CD"
+        }
+    ],
+    "links": [
+        {
+            "source": 35,
+            "target": 0,
+            "value": 1,
+            "title": "Make Your Bed: Little Things That Can Change Your Life...And Maybe the World",
+            "author": "Admiral William H. McRaven"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Island",
+            "author": "Aldous Huxley"
+        },
+        {
+            "source": 37,
+            "target": 2,
+            "value": 1,
+            "title": "The Definitive Book of Body Language",
+            "author": "Allan Pease"
+        },
+        {
+            "source": 36,
+            "target": 3,
+            "value": 1,
+            "title": "The Complete Ketogenic Diet for Beginners: Your Essential Guide to Living the Keto Lifestyle",
+            "author": "Amy Ramos"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Call Me By Your Name",
+            "author": "Andre Aciman"
+        },
+        {
+            "source": 37,
+            "target": 4,
+            "value": 1,
+            "title": "One Thousand Gifts: A Dare to Live Fully Right Where You Are",
+            "author": "Ann Voskamp"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "The Checklist Manifesto: How to Get Things Right",
+            "author": "Atul Gawande"
+        },
+        {
+            "source": 36,
+            "target": 5,
+            "value": 1,
+            "title": "The Intelligent Investor",
+            "author": "Benjamin Graham"
+        },
+        {
+            "source": 37,
+            "target": 2,
+            "value": 1,
+            "title": "The Body Keeps the Score: Brain, Mind, and Body in the Healing of Trauma",
+            "author": "Bessel van der Kolk M.D."
+        },
+        {
+            "source": 36,
+            "target": 6,
+            "value": 1,
+            "title": "The Body",
+            "author": "Bill Bryson"
+        },
+        {
+            "source": 39,
+            "target": 7,
+            "value": 1,
+            "title": "Brown Bear, Brown Bear, What Do You See?",
+            "author": "Bill Martin Jr."
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Everybody, Always: Becoming Love in a World Full of Setbacks and Difficult People",
+            "author": "Bob Goff"
+        },
+        {
+            "source": 36,
+            "target": 6,
+            "value": 1,
+            "title": "Rage",
+            "author": "Bob Woodward"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Humans of New York",
+            "author": "Brandon Stanton"
+        },
+        {
+            "source": 40,
+            "target": 0,
+            "value": 1,
+            "title": "Dare to Lead",
+            "author": "Brene Brown"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead",
+            "author": "Brené Brown"
+        },
+        {
+            "source": 38,
+            "target": 4,
+            "value": 1,
+            "title": "Mere Christianity",
+            "author": "C. S. Lewis"
+        },
+        {
+            "source": 37,
+            "target": 2,
+            "value": 1,
+            "title": "Mindset: The New Psychology of Success",
+            "author": "Carol S. Dweck"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Boy, the Mole, the Fox and the Horse",
+            "author": "Charlie Mackesy"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "We Should All Be Feminists",
+            "author": "Chimamanda Ngozi Adichie"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "The Magnolia Story",
+            "author": "Chip Gaines"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Switch: How to Change Things When Change Is Hard",
+            "author": "Chip Heath"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "American Sniper: The Autobiography of the Most Lethal Sniper in U.S. Military History",
+            "author": "Chris Kyle"
+        },
+        {
+            "source": 37,
+            "target": 8,
+            "value": 1,
+            "title": "Never Split the Difference",
+            "author": "Chris Voss"
+        },
+        {
+            "source": 36,
+            "target": 9,
+            "value": 1,
+            "title": "Pillow Thoughts",
+            "author": "Courtney Peppernell"
+        },
+        {
+            "source": 38,
+            "target": 10,
+            "value": 1,
+            "title": "Against All Odds",
+            "author": "Craig Challen"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "How to Win Friends and Influence People",
+            "author": "Dale Carnegie"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Drive: The Surprising Truth About What Motivates Us",
+            "author": "Daniel H. Pink"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Getting Things Done: The Art of Stress-Free Productivity",
+            "author": "David Allen"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "Can't Hurt Me: Master Your Mind and Defy the Odds",
+            "author": "David Goggins"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "Billionaire Boy",
+            "author": "David Walliams"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "Gangsta Granny",
+            "author": "David Walliams"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Everything I Know About Love",
+            "author": "Dolly Alderton"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "How the Grinch Stole Christmas!",
+            "author": "Dr. Seuss"
+        },
+        {
+            "source": 39,
+            "target": 11,
+            "value": 1,
+            "title": "Dr. Seuss's ABC",
+            "author": "Dr. Seuss"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "Oh, the Places You'll Go!",
+            "author": "Dr. Seuss"
+        },
+        {
+            "source": 36,
+            "target": 10,
+            "value": 1,
+            "title": "Fifty Shades Darker",
+            "author": "E L James"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Proof of Heaven: A Neurosurgeon's Journey into the Afterlife",
+            "author": "Eben Alexander"
+        },
+        {
+            "source": 38,
+            "target": 10,
+            "value": 1,
+            "title": "The Choice",
+            "author": "Edith Eger"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Me",
+            "author": "Elton John"
+        },
+        {
+            "source": 36,
+            "target": 7,
+            "value": 1,
+            "title": "Where's Spot?",
+            "author": "Eric Hill"
+        },
+        {
+            "source": 38,
+            "target": 12,
+            "value": 1,
+            "title": "The Splendid and the Vile: A Saga of Churchill, Family, and Defiance During the Blitz",
+            "author": "Erik Larson"
+        },
+        {
+            "source": 36,
+            "target": 4,
+            "value": 1,
+            "title": "Crazy Love: Overwhelmed by a Relentless God",
+            "author": "Francis Chan"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "A Man Called Ove",
+            "author": "Fredrik Backman"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "Crime and Punishment",
+            "author": "Fyodor Dostoyevsky"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Down and Out in Paris and London",
+            "author": "George Orwell"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Untamed",
+            "author": "Glennon Doyle"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Guinness World Records 2012",
+            "author": "Guinness World Records"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Road Back to You: An Enneagram Journey to Self-Discovery",
+            "author": "Ian Morgan Cron"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Trainspotting",
+            "author": "Irvine Welsh"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Fantastic Beasts and Where to Find Them",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 36,
+            "target": 10,
+            "value": 1,
+            "title": "Snow Falling",
+            "author": "Jane Gloriana Villanueva"
+        },
+        {
+            "source": 37,
+            "target": 16,
+            "value": 1,
+            "title": "Bad Blood",
+            "author": "John Carreyrou"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Racketeer",
+            "author": "John Grisham"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Rooster Bar",
+            "author": "John Grisham"
+        },
+        {
+            "source": 41,
+            "target": 1,
+            "value": 1,
+            "title": "The Litigators",
+            "author": "John Grisham"
+        },
+        {
+            "source": 36,
+            "target": 4,
+            "value": 1,
+            "title": "The Harbinger: The Ancient Mystery that Holds the Secret of America's Future",
+            "author": "Jonathan Cahn"
+        },
+        {
+            "source": 36,
+            "target": 10,
+            "value": 1,
+            "title": "One Day in December",
+            "author": "Josie Silver"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Wreck This Journal",
+            "author": "Keri Smith"
+        },
+        {
+            "source": 38,
+            "target": 17,
+            "value": 1,
+            "title": "Friend Request",
+            "author": "Laura Marshall"
+        },
+        {
+            "source": 42,
+            "target": 9,
+            "value": 1,
+            "title": "Gmorning, Gnight!: Little Pep Talks for Me & You",
+            "author": "Lin-Manuel Miranda"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Seven Sisters",
+            "author": "Lucinda Riley"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "The Tipping Point: How Little Things Can Make a Big Difference",
+            "author": "Malcolm Gladwell"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Outliers: The Story of Success",
+            "author": "Malcolm Gladwell"
+        },
+        {
+            "source": 36,
+            "target": 19,
+            "value": 1,
+            "title": "Meditations",
+            "author": "Marcus Aurelius"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "Goodnight Moon",
+            "author": "Margaret Wise Brown"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Life-Changing Magic of Tidying Up: The Japanese Art of Decluttering and Organizing",
+            "author": "Marie Kondō"
+        },
+        {
+            "source": 40,
+            "target": 0,
+            "value": 1,
+            "title": "The Subtle Art of Not Giving a F*ck: A Counterintuitive Approach to Living a Good Life",
+            "author": "Mark Manson"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "In Defense of Food: An Eater's Manifesto",
+            "author": "Michael Pollan"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Fire and Fury: Inside the Trump White House",
+            "author": "Michael Wolff"
+        },
+        {
+            "source": 39,
+            "target": 7,
+            "value": 1,
+            "title": "There Was an Old Lady Who Swallowed a Fly",
+            "author": "Missing"
+        },
+        {
+            "source": 36,
+            "target": 10,
+            "value": 1,
+            "title": "After",
+            "author": "Morris Gleitzman"
+        },
+        {
+            "source": 37,
+            "target": 21,
+            "value": 1,
+            "title": "Once",
+            "author": "Morris Gleitzman"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "On the Night You Were Born",
+            "author": "Nancy Tillman"
+        },
+        {
+            "source": 37,
+            "target": 10,
+            "value": 1,
+            "title": "The Best of Me",
+            "author": "Nicholas Sparks"
+        },
+        {
+            "source": 37,
+            "target": 8,
+            "value": 1,
+            "title": "The Five Dysfunctions of a Team: A Leadership Fable",
+            "author": "Patrick Lencioni"
+        },
+        {
+            "source": 43,
+            "target": 10,
+            "value": 1,
+            "title": "Northern Lights",
+            "author": "Philip Pullman"
+        },
+        {
+            "source": 44,
+            "target": 8,
+            "value": 1,
+            "title": "Principles: Life and Work",
+            "author": "Ray Dalio"
+        },
+        {
+            "source": 36,
+            "target": 22,
+            "value": 1,
+            "title": "What We Talk About When We Talk About Love",
+            "author": "Raymond Carver"
+        },
+        {
+            "source": 37,
+            "target": 20,
+            "value": 1,
+            "title": "The Secret",
+            "author": "Rhonda Byrne"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "What Do People Do All Day?",
+            "author": "Richard Scarry"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "Love Wins: A Book About Heaven, Hell, and the Fate of Every Person Who Ever Lived",
+            "author": "Rob Bell"
+        },
+        {
+            "source": 38,
+            "target": 2,
+            "value": 1,
+            "title": "The Laws of Human Nature",
+            "author": "Robert Greene"
+        },
+        {
+            "source": 36,
+            "target": 7,
+            "value": 1,
+            "title": "Love You Forever",
+            "author": "Robert Munsch"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "White Fragility: Why It's So Hard for White People to Talk About Racism",
+            "author": "Robin DiAngelo"
+        },
+        {
+            "source": 36,
+            "target": 9,
+            "value": 1,
+            "title": "Milk and Honey",
+            "author": "Rupi Kaur"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Diary of a Bookseller",
+            "author": "Shaun Bythell"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "The Giving Tree",
+            "author": "Shel Silverstein"
+        },
+        {
+            "source": 37,
+            "target": 8,
+            "value": 1,
+            "title": "Start with Why: How Great Leaders Inspire Everyone to Take Action",
+            "author": "Simon Sinek"
+        },
+        {
+            "source": 37,
+            "target": 8,
+            "value": 1,
+            "title": "The Infinite Game",
+            "author": "Simon Sinek"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "The Perks of Being a Wallflower",
+            "author": "Stephen Chbosky"
+        },
+        {
+            "source": 37,
+            "target": 23,
+            "value": 1,
+            "title": "The Grand Design",
+            "author": "Stephen Hawking"
+        },
+        {
+            "source": 36,
+            "target": 20,
+            "value": 1,
+            "title": "The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change",
+            "author": "Stephen R. Covey"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Midnight Sun",
+            "author": "Stephenie Meyer"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "The Art of War",
+            "author": "Sun Tzu"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "The Guest Cat",
+            "author": "Takashi Hiraide"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "Sarah's Key",
+            "author": "Tatiana de Rosnay"
+        },
+        {
+            "source": 37,
+            "target": 24,
+            "value": 1,
+            "title": "Through My Eyes",
+            "author": "Tim Tebow"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Heaven is for Real: A Little Boy's Astounding Story of His Trip to Heaven and Back",
+            "author": "Todd Burpo"
+        },
+        {
+            "source": 44,
+            "target": 25,
+            "value": 1,
+            "title": "Ship of Fools: How a Selfish Ruling Class Is Bringing America to the Brink of Revolution",
+            "author": "Tucker Carlson"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Man's Search for Meaning",
+            "author": "Viktor E. Frankl"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "Lord of the Flies",
+            "author": "William Golding"
+        },
+        {
+            "source": 37,
+            "target": 3,
+            "value": 1,
+            "title": "Plenty",
+            "author": "Yotam Ottolenghi"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "Sweet",
+            "author": "Yotam Ottolenghi"
+        },
+        {
+            "source": 38,
+            "target": 26,
+            "value": 1,
+            "title": "Go the F**k to Sleep",
+            "author": "Adam Mansbach"
+        },
+        {
+            "source": 37,
+            "target": 16,
+            "value": 1,
+            "title": "The Silent Patient",
+            "author": "Alex Michaelides"
+        },
+        {
+            "source": 37,
+            "target": 27,
+            "value": 1,
+            "title": "The Jolly Christmas Postman",
+            "author": "Allan Ahlberg"
+        },
+        {
+            "source": 36,
+            "target": 26,
+            "value": 1,
+            "title": "Hyperbole and a Half: Unfortunate Situations, Flawed Coping Mechanisms, Mayhem, and Other Things That Happened",
+            "author": "Allie Brosh"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Find Me",
+            "author": "Andre Aciman"
+        },
+        {
+            "source": 36,
+            "target": 26,
+            "value": 1,
+            "title": "The 26-Storey Treehouse",
+            "author": "Andy Griffiths"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "The 39-Storey Treehouse",
+            "author": "Andy Griffiths"
+        },
+        {
+            "source": 43,
+            "target": 0,
+            "value": 1,
+            "title": "The Diary of a Young Girl",
+            "author": "Anne Frank"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "The Little Prince",
+            "author": "Antoine de Saint-Exupery"
+        },
+        {
+            "source": 37,
+            "target": 12,
+            "value": 1,
+            "title": "Killing Kennedy: The End of Camelot",
+            "author": "Bill O'Reilly"
+        },
+        {
+            "source": 36,
+            "target": 28,
+            "value": 1,
+            "title": "Humans",
+            "author": "Brandon Stanton"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Dark Emu",
+            "author": "Bruce Pascoe"
+        },
+        {
+            "source": 36,
+            "target": 29,
+            "value": 1,
+            "title": "Born to Run",
+            "author": "Bruce Springsteen"
+        },
+        {
+            "source": 38,
+            "target": 15,
+            "value": 1,
+            "title": "A Tale of Magic...",
+            "author": "Chris Colfer"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Born to Run: A Hidden Tribe, Superathletes, and the Greatest Race the World Has Never Seen",
+            "author": "Christopher McDougall"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Road to Character",
+            "author": "David Brooks"
+        },
+        {
+            "source": 38,
+            "target": 12,
+            "value": 1,
+            "title": "The Pioneers: The Heroic Story of the Settlers Who Brought the American Ideal West",
+            "author": "David McCullough"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "Grandpa's Great Escape",
+            "author": "David Walliams"
+        },
+        {
+            "source": 36,
+            "target": 11,
+            "value": 1,
+            "title": "Mr Stink",
+            "author": "David Walliams"
+        },
+        {
+            "source": 37,
+            "target": 11,
+            "value": 1,
+            "title": "Awful Auntie",
+            "author": "David Walliams"
+        },
+        {
+            "source": 36,
+            "target": 28,
+            "value": 1,
+            "title": "Metro 2033",
+            "author": "Dmitry Glukhovsky"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "The Day the Crayons Came Home",
+            "author": "Drew Daywalt"
+        },
+        {
+            "source": 39,
+            "target": 7,
+            "value": 1,
+            "title": "The Very Hungry Caterpillar",
+            "author": "Eric Carle"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "The Great Gatsby",
+            "author": "F. Scott Fitzgerald"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "The 5 Love Languages: The Secret to Love that Lasts",
+            "author": "Gary Chapman"
+        },
+        {
+            "source": 37,
+            "target": 30,
+            "value": 1,
+            "title": "Decision Points",
+            "author": "George W. Bush"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "What Happened",
+            "author": "Hillary Rodham Clinton"
+        },
+        {
+            "source": 38,
+            "target": 1,
+            "value": 1,
+            "title": "The Travelling Cat Chronicles",
+            "author": "Hiro Arikawa"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "The Tales of Beedle the Bard",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Casual Vacancy",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+            "author": "James Clear"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "A Higher Loyalty: Truth, Lies, and Leadership",
+            "author": "James Comey"
+        },
+        {
+            "source": 38,
+            "target": 15,
+            "value": 1,
+            "title": "Legacy",
+            "author": "James Kerr"
+        },
+        {
+            "source": 39,
+            "target": 7,
+            "value": 1,
+            "title": "Each Peach Pear Plum",
+            "author": "Janet Ahlberg"
+        },
+        {
+            "source": 37,
+            "target": 8,
+            "value": 1,
+            "title": "Rework",
+            "author": "Jason Fried"
+        },
+        {
+            "source": 36,
+            "target": 20,
+            "value": 1,
+            "title": "You Are a Badass: How to Stop Doubting Your Greatness and Start Living an Awesome Life",
+            "author": "Jen Sincero"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "Of Mice and Men",
+            "author": "John Steinbeck"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Giver of Stars",
+            "author": "Jojo Moyes"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "12 Rules for Life: An Antidote to Chaos",
+            "author": "Jordan B. Peterson"
+        },
+        {
+            "source": 36,
+            "target": 7,
+            "value": 1,
+            "title": "Room on the Broom",
+            "author": "Julia Donaldson"
+        },
+        {
+            "source": 37,
+            "target": 26,
+            "value": 1,
+            "title": "Sh*t My Dad Says",
+            "author": "Justin Halpern"
+        },
+        {
+            "source": 37,
+            "target": 31,
+            "value": 1,
+            "title": "Life",
+            "author": "Keith Richards"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Spoken from the Heart",
+            "author": "Laura Bush"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Blue Moon",
+            "author": "Lee Child"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "Before We Were Yours",
+            "author": "Lisa Wingate"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Call Down the Hawk",
+            "author": "Maggie Stiefvater"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "I Know Why the Caged Bird Sings",
+            "author": "Maya Angelou"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Boomerang: Travels in the New Third World",
+            "author": "Michael Lewis"
+        },
+        {
+            "source": 36,
+            "target": 11,
+            "value": 1,
+            "title": "The Butterfly Lion",
+            "author": "Michael Morpurgo"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Reason I Jump: The Inner Voice of a Thirteen-Year-Old Boy with Autism",
+            "author": "Naoki Higashida"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "The Toll",
+            "author": "Neal Shusterman"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "Norse Mythology",
+            "author": "Neil Gaiman"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "The Prince",
+            "author": "Niccolo Machiavelli"
+        },
+        {
+            "source": 38,
+            "target": 10,
+            "value": 1,
+            "title": "Safe Haven",
+            "author": "Nicholas Sparks"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Year One",
+            "author": "Nora Roberts"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "What I Know for Sure",
+            "author": "Oprah Winfrey"
+        },
+        {
+            "source": 43,
+            "target": 15,
+            "value": 1,
+            "title": "His Dark Materials",
+            "author": "Philip Pullman"
+        },
+        {
+            "source": 36,
+            "target": 22,
+            "value": 1,
+            "title": "Will You Please Be Quiet, Please?",
+            "author": "Raymond Carver"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "Whiskey in a Teacup: What Growing Up in the South Taught Me About Life, Love, and Baking Biscuits",
+            "author": "Reese Witherspoon"
+        },
+        {
+            "source": 37,
+            "target": 6,
+            "value": 1,
+            "title": "The Lost Causes of Bleak Creek",
+            "author": "Rhett McLaughlin"
+        },
+        {
+            "source": 36,
+            "target": 9,
+            "value": 1,
+            "title": "Revolting Rhymes",
+            "author": "Roald Dahl"
+        },
+        {
+            "source": 36,
+            "target": 16,
+            "value": 1,
+            "title": "Lethal White",
+            "author": "Robert Galbraith"
+        },
+        {
+            "source": 36,
+            "target": 9,
+            "value": 1,
+            "title": "The Sun and Her Flowers",
+            "author": "Rupi Kaur"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Serpent & Dove",
+            "author": "Shelby Mahurin"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Heroes",
+            "author": "Stephen Fry"
+        },
+        {
+            "source": 36,
+            "target": 23,
+            "value": 1,
+            "title": "Brief Answers to the Big Questions",
+            "author": "Stephen Hawking"
+        },
+        {
+            "source": 37,
+            "target": 32,
+            "value": 1,
+            "title": "Thirteen",
+            "author": "Steve Cavanagh"
+        },
+        {
+            "source": 38,
+            "target": 8,
+            "value": 1,
+            "title": "Tools of Titans: The Tactics, Routines, and Habits of Billionaires, Icons, and World-Class Performers",
+            "author": "Timothy Ferriss"
+        },
+        {
+            "source": 37,
+            "target": 8,
+            "value": 1,
+            "title": "Delivering Happiness: A Path to Profits, Passion, and Purpose",
+            "author": "Tony Hsieh"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Before the Coffee Gets Cold",
+            "author": "Toshikazu Kawaguchi"
+        },
+        {
+            "source": 37,
+            "target": 2,
+            "value": 1,
+            "title": "Emotional Intelligence 2.0",
+            "author": "Travis Bradberry"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Allegiant",
+            "author": "Veronica Roth"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "21 Lessons for the 21st Century",
+            "author": "Yuval Noah Harari"
+        },
+        {
+            "source": 38,
+            "target": 15,
+            "value": 1,
+            "title": "The Last Wish",
+            "author": "Andrzej Sapkowski"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Power of Habit: Why We Do What We Do in Life and Business",
+            "author": "Charles Duhigg"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "Inferno",
+            "author": "Dan Brown"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Social Animal: The Hidden Sources of Love, Character, and Achievement",
+            "author": "David Brooks"
+        },
+        {
+            "source": 37,
+            "target": 12,
+            "value": 1,
+            "title": "The Wright Brothers",
+            "author": "David McCullough"
+        },
+        {
+            "source": 40,
+            "target": 1,
+            "value": 1,
+            "title": "Where the Crawdads Sing",
+            "author": "Delia Owens"
+        },
+        {
+            "source": 37,
+            "target": 12,
+            "value": 1,
+            "title": "The Bully Pulpit: Theodore Roosevelt, William Howard Taft, and the Golden Age of Journalism",
+            "author": "Doris Kearns Goodwin"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Dead Wake: The Last Crossing of the Lusitania",
+            "author": "Erik Larson"
+        },
+        {
+            "source": 38,
+            "target": 13,
+            "value": 1,
+            "title": "1984",
+            "author": "George Orwell"
+        },
+        {
+            "source": 43,
+            "target": 13,
+            "value": 1,
+            "title": "Animal Farm",
+            "author": "George Orwell"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Tattooist of Auschwitz",
+            "author": "Heather Morris"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "The Catcher in the Rye",
+            "author": "J. D. Salinger"
+        },
+        {
+            "source": 43,
+            "target": 28,
+            "value": 1,
+            "title": "The Guardians",
+            "author": "John Grisham"
+        },
+        {
+            "source": 36,
+            "target": 7,
+            "value": 1,
+            "title": "The Gruffalo",
+            "author": "Julia Donaldson"
+        },
+        {
+            "source": 38,
+            "target": 18,
+            "value": 1,
+            "title": "The Secrets We Kept",
+            "author": "Lara Prescott"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Hamilton: The Revolution",
+            "author": "Lin-Manuel Miranda"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "David and Goliath: Underdogs, Misfits, and the Art of Battling Giants",
+            "author": "Malcolm Gladwell"
+        },
+        {
+            "source": 36,
+            "target": 18,
+            "value": 1,
+            "title": "The Guernsey Literary and Potato Peel Pie Society",
+            "author": "Mary Ann Shaffer"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "East",
+            "author": "Meera Sodha"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Astrophysics for People in a Hurry",
+            "author": "Neil deGrasse Tyson"
+        },
+        {
+            "source": 37,
+            "target": 10,
+            "value": 1,
+            "title": "The Longest Ride",
+            "author": "Nicholas Sparks"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "The Dot",
+            "author": "Peter H. Reynolds"
+        },
+        {
+            "source": 36,
+            "target": 11,
+            "value": 1,
+            "title": "Charlie and the Chocolate Factory",
+            "author": "Roald Dahl"
+        },
+        {
+            "source": 36,
+            "target": 12,
+            "value": 1,
+            "title": "Alexander Hamilton",
+            "author": "Ron Chernow"
+        },
+        {
+            "source": 43,
+            "target": 13,
+            "value": 1,
+            "title": "The Outsiders",
+            "author": "S. E. Hinton"
+        },
+        {
+            "source": 39,
+            "target": 7,
+            "value": 1,
+            "title": "Guess How Much I Love You",
+            "author": "Sam McBratney"
+        },
+        {
+            "source": 37,
+            "target": 12,
+            "value": 1,
+            "title": "Cleopatra: A Life",
+            "author": "Stacy Schiff"
+        },
+        {
+            "source": 36,
+            "target": 6,
+            "value": 1,
+            "title": "The Shining",
+            "author": "Stephen King"
+        },
+        {
+            "source": 36,
+            "target": 10,
+            "value": 1,
+            "title": "Bared to You",
+            "author": "Sylvia Day"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Seven Husbands of Evelyn Hugo",
+            "author": "TAYLOR JENKINS REID"
+        },
+        {
+            "source": 37,
+            "target": 30,
+            "value": 1,
+            "title": "Leonardo da Vinci",
+            "author": "Walter Isaacson"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "Sapiens: A Brief History of Humankind",
+            "author": "Yuval Noah Harari"
+        },
+        {
+            "source": 36,
+            "target": 26,
+            "value": 1,
+            "title": "The 13-Storey Treehouse",
+            "author": "Andy Griffiths"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Being Mortal: Medicine and What Matters in the End",
+            "author": "Atul Gawande"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Little Fires Everywhere",
+            "author": "Celeste Ng"
+        },
+        {
+            "source": 37,
+            "target": 12,
+            "value": 1,
+            "title": "The Greater Journey: Americans in Paris",
+            "author": "David McCullough"
+        },
+        {
+            "source": 37,
+            "target": 12,
+            "value": 1,
+            "title": "In the Garden of Beasts: Love, Terror, and an American Family in Hitler's Berlin",
+            "author": "Eric Larson"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "The Starless Sea",
+            "author": "Erin Morgenstern"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Half-Blood Prince",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "Knife",
+            "author": "Jo Nesbo"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Nightingale",
+            "author": "Kristin Hannah"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Big Little Lies",
+            "author": "Liane Moriarty"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Song of Achilles",
+            "author": "Madeline Miller"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Omnivore's Dilemma: A Natural History of Four Meals",
+            "author": "Michael Pollan"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Becoming",
+            "author": "Michelle Obama"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Lean In: Women, Work, and the Will to Lead",
+            "author": "Sheryl Sandberg"
+        },
+        {
+            "source": 37,
+            "target": 6,
+            "value": 1,
+            "title": "Full Dark, No Stars",
+            "author": "Stephen King"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Invention of Wings",
+            "author": "Sue Monk Kidd"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Quiet: The Power of Introverts in a World That Can't Stop Talking",
+            "author": "Susan Cain"
+        },
+        {
+            "source": 36,
+            "target": 18,
+            "value": 1,
+            "title": "A Gentleman in Moscow",
+            "author": "Amor Towles"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Yes Please",
+            "author": "Amy Poehler"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "State of Wonder",
+            "author": "Ann Patchett"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "The Most Magnificent Thing",
+            "author": "Ashley Spires"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Girl, Woman, Other",
+            "author": "Bernardine Evaristo"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Wild: From Lost to Found on the Pacific Crest Trail",
+            "author": "Cheryl Strayed"
+        },
+        {
+            "source": 36,
+            "target": 18,
+            "value": 1,
+            "title": "Orphan Train",
+            "author": "Christina Baker Kline"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Thinking, Fast and Slow",
+            "author": "Daniel Kahneman"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Olive Kitteridge",
+            "author": "Elizabeth Strout"
+        },
+        {
+            "source": 36,
+            "target": 13,
+            "value": 1,
+            "title": "To Kill a Mockingbird",
+            "author": "Harper Lee"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Hillbilly Elegy: A Memoir of a Family and Culture in Crisis",
+            "author": "J. D. Vance"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "Hotel on the Corner of Bitter and Sweet",
+            "author": "Jamie Ford"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Miniaturist",
+            "author": "Jessie Burton"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "Turtles All the Way Down",
+            "author": "John Green"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "And the Mountains Echoed",
+            "author": "Khaled Hosseini"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "A Long Walk to Water: Based on a True Story",
+            "author": "Linda Sue Park"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Circe",
+            "author": "Madeline Miller"
+        },
+        {
+            "source": 36,
+            "target": 0,
+            "value": 1,
+            "title": "The Big Short: Inside the Doomsday Machine",
+            "author": "Michael Lewis"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "The Alchemist",
+            "author": "Paulo Coelho"
+        },
+        {
+            "source": 38,
+            "target": 13,
+            "value": 1,
+            "title": "Fahrenheit 451",
+            "author": "Ray Bradbury"
+        },
+        {
+            "source": 36,
+            "target": 28,
+            "value": 1,
+            "title": "Burning Chrome",
+            "author": "William Gibson"
+        },
+        {
+            "source": 40,
+            "target": 1,
+            "value": 1,
+            "title": "Milkman",
+            "author": "Anna Burns"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "The Book with No Pictures",
+            "author": "B. J. Novak"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Everything I Never Told You",
+            "author": "Celeste Ng"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Home",
+            "author": "Julie Andrews"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Ninth House",
+            "author": "Leigh Bardugo"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "On Earth We're Briefly Gorgeous",
+            "author": "Ocean Vuong"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "My Sister, the Serial Killer",
+            "author": "Oyinkan Braithwaite"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Miss Peregrine's Home for Peculiar Children",
+            "author": "Ransom Riggs"
+        },
+        {
+            "source": 38,
+            "target": 1,
+            "value": 1,
+            "title": "Conversations with Friends",
+            "author": "Sally Rooney"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Cutting for Stone",
+            "author": "Abraham Verghese"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Just Mercy: A Story of Justice and Redemption",
+            "author": "Bryan Stevenson"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "I Want My Hat Back",
+            "author": "Jon Klassen"
+        },
+        {
+            "source": 38,
+            "target": 18,
+            "value": 1,
+            "title": "Pachinko",
+            "author": "Min Jin Lee"
+        },
+        {
+            "source": 38,
+            "target": 0,
+            "value": 1,
+            "title": "When Breath Becomes Air",
+            "author": "Paul Kalanithi"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Girl on the Train",
+            "author": "Paula Hawkins"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "The Overstory",
+            "author": "Richard Powers"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Normal People",
+            "author": "Sally Rooney"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Red Queen",
+            "author": "Victoria Aveyard"
+        },
+        {
+            "source": 36,
+            "target": 33,
+            "value": 1,
+            "title": "Watchmen",
+            "author": "Alan Moore"
+        },
+        {
+            "source": 40,
+            "target": 0,
+            "value": 1,
+            "title": "Killers of the Flower Moon: The Osage Murders and the Birth of the FBI",
+            "author": "David Grann"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Chamber of Secrets",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "Freedom",
+            "author": "Jonathan Franzen"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "The Girl Who Drank the Moon",
+            "author": "Kelly Barnhill"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Testaments",
+            "author": "Margaret Atwood"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Immortal Life of Henrietta Lacks",
+            "author": "Rebecca Skloot"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "The Boys in the Boat: Nine Americans and Their Epic Quest for Gold at the 1936 Berlin Olympics",
+            "author": "Daniel James Brown"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Deathly Hallows",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 36,
+            "target": 19,
+            "value": 1,
+            "title": "Sophie's World",
+            "author": "Jostein Gaarder"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "The Name of the Wind",
+            "author": "Patrick Rothfuss"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Between the World and Me",
+            "author": "Ta-Nehisi Coates"
+        },
+        {
+            "source": 37,
+            "target": 0,
+            "value": 1,
+            "title": "Educated",
+            "author": "Tara Westover"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "Aristotle and Dante Discover the Secrets of the Universe",
+            "author": "Benjamin Alire Saenz"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Gone Girl",
+            "author": "Gillian Flynn"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "A Little Life",
+            "author": "Hanya Yanagihara"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "Bring Up the Bodies",
+            "author": "Hilary Mantel"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Goblet of Fire",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Order of the Phoenix",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "A Visit from the Goon Squad",
+            "author": "Jennifer Egan"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Six of Crows",
+            "author": "Leigh Bardugo"
+        },
+        {
+            "source": 37,
+            "target": 28,
+            "value": 1,
+            "title": "The Martian",
+            "author": "Andy Weir"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "Cloud Atlas",
+            "author": "David Mitchell"
+        },
+        {
+            "source": 37,
+            "target": 34,
+            "value": 1,
+            "title": "The One and Only Ivan",
+            "author": "Katherine Applegate"
+        },
+        {
+            "source": 37,
+            "target": 1,
+            "value": 1,
+            "title": "The Help",
+            "author": "Kathryn Stockett"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "The Raven Boys",
+            "author": "Maggie Stiefvater"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "Don't Let the Pigeon Drive the Bus!",
+            "author": "Mo Willems"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "Everything, Everything",
+            "author": "Nicola Yoon"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "All the Light We Cannot See",
+            "author": "Anthony Doerr"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Invention of Hugo Cabret",
+            "author": "Brian Selznick"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Paper Towns",
+            "author": "John Green"
+        },
+        {
+            "source": 36,
+            "target": 15,
+            "value": 1,
+            "title": "Coraline",
+            "author": "Neil Gaiman"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Looking for Alaska",
+            "author": "John Green"
+        },
+        {
+            "source": 37,
+            "target": 7,
+            "value": 1,
+            "title": "The Day the Crayons Quit",
+            "author": "Drew Daywalt"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "If I Stay",
+            "author": "Gayle Forman"
+        },
+        {
+            "source": 43,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Prisoner of Azkaban",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 36,
+            "target": 1,
+            "value": 1,
+            "title": "The Handmaid's Tale",
+            "author": "Margaret Atwood"
+        },
+        {
+            "source": 37,
+            "target": 32,
+            "value": 1,
+            "title": "Out of My Mind",
+            "author": "Sharon M. Draper"
+        },
+        {
+            "source": 36,
+            "target": 11,
+            "value": 1,
+            "title": "Matilda",
+            "author": "Roald Dahl"
+        },
+        {
+            "source": 38,
+            "target": 1,
+            "value": 1,
+            "title": "Room",
+            "author": "Emma Donoghue"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "The Hate U Give",
+            "author": "Angie Thomas"
+        },
+        {
+            "source": 37,
+            "target": 18,
+            "value": 1,
+            "title": "The Book Thief",
+            "author": "Markus Zusak"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Divergent",
+            "author": "Veronica Roth"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "The Giver",
+            "author": "Lois Lowry"
+        },
+        {
+            "source": 36,
+            "target": 14,
+            "value": 1,
+            "title": "Holes",
+            "author": "Louis Sachar"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "Wonder",
+            "author": "R. J. Palacio"
+        },
+        {
+            "source": 37,
+            "target": 15,
+            "value": 1,
+            "title": "Harry Potter and the Sorcerer's Stone",
+            "author": "J. K. Rowling"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "The Fault in Our Stars",
+            "author": "John Green"
+        },
+        {
+            "source": 37,
+            "target": 14,
+            "value": 1,
+            "title": "The Hunger Games",
+            "author": "Suzanne Collins"
+        }
+    ]
+}
