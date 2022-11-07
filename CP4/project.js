@@ -368,7 +368,7 @@ function dataSankey(data) {
 function scatterPlot(data) {
 
     var regressionPoints = getSpearmanLinearRegression(data);
-    var fisheye = d3.fisheye.circular().radius(120);
+    var fisheye = d3.fisheye.circular().radius(50).distortion(3);
 
     var div = d3.select("body").append("div")
         .attr("id", "popupdiv")
@@ -441,7 +441,7 @@ function scatterPlot(data) {
 
     // Create dots
     //svg.append('g')
-     var circles = svg.selectAll("dots")
+     var dots = svg.selectAll("dots")
         .data(data, (d) => d.title)
         .join("circle")
         .attr("class", "dots itemValue")
@@ -453,21 +453,17 @@ function scatterPlot(data) {
         .attr("r", 2)
         .style("fill", "#EDCA3A")
         //.on("mouseover", (event, d) => handleMouseOver(d))
-        //.on("mouseleave", (event, d) => handleMouseLeave())
-        .append("title")
-        .html((d) => d.title + ", Author: " + d.Author);
+        //.on("mouseleave", (event, d) => handleMouseLeave());
+        //.append("title");
+        // .html((d) => d.title + ", Author: " + d.Author);
 
-    svg.on("mousemove", function(event, d) {
+    svg.on("mousemove", function(event) {
         fisheye.focus(d3.pointer(event));
 
-        // var mouse = d3.pointer(event);
-        // xScale.distortion(2.5).focus(mouse[0]);
-        // yScale.distortion(2.5).focus(mouse[1]);
-
-        circles.each(function(d) { d.fisheye = fisheye(d); })
+        dots.each(function(d) { d.fisheye = fisheye(d); })
             .attr("cx", function(d) { return d.fisheye.x; })
             .attr("cy", function(d) { return d.fisheye.y; })
-            .attr("r", function(d) { return d.fisheye.z * 4.5; });
+            .attr("r", function(d) { return d.fisheye.z * 1; });
     });
 
     svg.append('path')
