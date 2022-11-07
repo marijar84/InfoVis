@@ -368,6 +368,7 @@ function dataSankey(data) {
 function scatterPlot(data) {
 
     var regressionPoints = getSpearmanLinearRegression(data);
+    var fisheye = d3.fisheye.circular().radius(120);
 
     var div = d3.select("body").append("div")
         .attr("id", "popupdiv")
@@ -439,19 +440,35 @@ function scatterPlot(data) {
         .y(d => yScale(d.y))
 
     // Create dots
-    svg.append('g')
-        .selectAll("dots")
+    //svg.append('g')
+     var circles = svg.selectAll("dots")
         .data(data, (d) => d.title)
         .join("circle")
         .attr("class", "dots itemValue")
-        .attr("cx", (d) => xScale(parseFloat(d.awards)))
-        .attr("cy", (d) => yScale(parseFloat(d.rating)))
+        .datum( function(d) {
+            return {x: xScale(parseFloat(d.awards)), y: yScale(parseFloat(d.rating))} // change data, to feed to the fisheye plugin
+        })
+        .attr("cx", (d) => d.x)
+        .attr("cy", (d) => d.y)
         .attr("r", 2)
         .style("fill", "#EDCA3A")
-        .on("mouseover", (event, d) => handleMouseOver(d))
-        .on("mouseleave", (event, d) => handleMouseLeave())
+        //.on("mouseover", (event, d) => handleMouseOver(d))
+        //.on("mouseleave", (event, d) => handleMouseLeave())
         .append("title")
         .html((d) => d.title + ", Author: " + d.Author);
+
+    svg.on("mousemove", function(event, d) {
+        fisheye.focus(d3.pointer(event));
+
+        // var mouse = d3.pointer(event);
+        // xScale.distortion(2.5).focus(mouse[0]);
+        // yScale.distortion(2.5).focus(mouse[1]);
+
+        circles.each(function(d) { d.fisheye = fisheye(d); })
+            .attr("cx", function(d) { return d.fisheye.x; })
+            .attr("cy", function(d) { return d.fisheye.y; })
+            .attr("r", function(d) { return d.fisheye.z * 4.5; });
+    });
 
     svg.append('path')
         .classed('regressionLine', true)
