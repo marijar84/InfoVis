@@ -256,7 +256,7 @@ function sankeyChart(data) {
         link.append("title")
             .text(function (d) {
                 return d.source.name + " → " + d.target.name + "\n" +
-                    "Title: " + d.title + "\n" +
+                    "\""+ d.title + "\"" + "\n" +
                     "Author: " + d.author;
             });
 
@@ -721,8 +721,6 @@ function unitChart(data) {
         .attr("id", "gXAxis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xScale).ticks(10).tickFormat(d3.format(".0f")));
-
-
 
 
     // Create Y axis
