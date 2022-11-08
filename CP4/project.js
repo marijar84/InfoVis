@@ -1,7 +1,9 @@
 let csvdata, csvdataUnit;
 var allGenres = [];
 var allPublishers = [];
-let ratingValue = 0, genre = "All genre", minYear = 1964, maxYear = 2020;
+let ratingValue = "Any", genre = "All genre", minYear = 1964, maxYear = 2020;
+
+
 
 function init() {
     d3.csv("resultshandmade2.csv").then(function (data) {
@@ -29,13 +31,9 @@ function filters() {
         filterByRating = csvdata;
     }
 
-    console.log("filterByRating", filterByRating);
-
     let filterbyYear = filterByRating.filter((item) => {
         return (parseFloat(item.publishDate) >= minYear && parseFloat(item.publishDate) <= maxYear);
     });
-
-    console.log("filterbyYear", filterbyYear);
 
     if (genre !== "All genre") {
         for (var i = 0; i < filterbyYear.length; i++) {
@@ -53,29 +51,53 @@ function filters() {
     else {
         allFilters = filterbyYear;
     }
-
-    console.log("filterByGenre", allFilters);
-
     updateScatterPlot(allFilters);
     updateUnitChar(groupDataByPublishedDate(allFilters));
     removePieChart();
     sankeyChart(allFilters);
+    filldropDown_Author(allFilters);
+
+    if(allFilters.length == 0){
+        alert("No data to show");
+    }
+}
+
+function clearFilters() {
+    ratingValue = "Any";
+    genre = "All genre";
+    minYear = 1964;
+    maxYear = 2020;
+    filldropDown_Author(csvdata);
+    filters();
+
+    document.getElementById("inlineCheckbox1").checked = true;
+
+    $("#slider-range").slider({
+        range: true,
+        min: 1964,
+        max: 2020,
+        values: [1964, 2020],
+        slide: function (event, ui) {
+            $("#amount").val(+ ui.values[0] + " - " + ui.values[1]);
+            minYear = ui.values[0];
+            maxYear = ui.values[1];
+            filters();
+        }
+    });
+    $("#amount").val($("#slider-range").slider("values", 0) +
+    " - " + $("#slider-range").slider("values", 1));
+
+    document.getElementById("genres").value = genre;
+
 }
 //#endregion
 
 //#region  Rating 
 
-function ratingclick(value) {
-
-    ratingValue = value;
-    filters();}
-
 $('label').click(function (e) {
     e.preventDefault();
 
     var radio = $(this).find('input[type=radio]');
-
-    console.log("radio", radio);
 
     if (radio.is(':checked')) {
         e.stopImmediatePropagation();
@@ -88,7 +110,6 @@ $('label').click(function (e) {
 });
 
 function ratingCheck(value) {
-    console.log("value", value);
     ratingValue = value;
     filters();
 }
@@ -100,6 +121,12 @@ function ratingCheck(value) {
 //fill out dropdown list information
 function filldropDown_genre(data) {
 
+    const genreDropDown = document.getElementById("genres");
+
+    while (genreDropDown.firstChild) {
+        genreDropDown.removeChild(genreDropDown.lastChild);
+      }
+
     for (var i = 0; i < data.length; i++) {
         var genres = data[i].genres;
         //Remove all special characteres    
@@ -107,14 +134,12 @@ function filldropDown_genre(data) {
         //set in an array allgenres by item      
         var arrayGenre = genres.split(", ");
 
-        //for (var j = 0; j < arrayGenre.length; j++) {
         allGenres.push(arrayGenre[0]);
-        //}
     }
     //Sort all genre
     allGenres.sort();
     allGenres.unshift("All genre");
-    const genreDropDown = document.getElementById("genres");
+    
 
     //Fill out information inside dropdown list
     for (var i = 0; i < allGenres.length; i++) {
@@ -188,13 +213,8 @@ function sankeyChart(data) {
     //dataSankey(data);
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 5, bottom: 10, left: 25 },
-        width = 700 - margin.left - margin.right,
+        width = 800 - margin.left - margin.right,
         height = 580 - margin.top - margin.bottom;
-
-    // format variables
-    var formatNumber = d3.format(",.0f"), // zero decimal places
-        format = function (d) { return formatNumber(d); },
-        color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // append the svg object to the body of the page
     var svg = d3.select("#sankey").append("svg")
@@ -204,76 +224,83 @@ function sankeyChart(data) {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    // Set the sankey diagram properties
-    var sankey = d3.sankey()
-        .nodeWidth(8)
-        .nodePadding(8)
-        .size([width, height]);
-
-    var path = sankey.links();
-
-    // load the data
-    //d3.json("sankey.json").then(function (sankeydata) {
-    graph = sankey(dataSankey(data));
-
-    // add in the links
-    var link = svg.append("g").selectAll(".link")
-        .data(graph.links)
-        .enter().append("path")
-        .attr("class", "link")
-        .attr("d", d3.sankeyLinkHorizontal())
-        .attr("stroke-width", 1)
-        .on("mouseover", (event, d) => handleMouseOver(d))
-        .on("mouseleave", (event, d) => handleMouseLeave());
-
-    // add the link titles
-    link.append("title")
-        .text(function (d) {
-            return d.source.name + " → " + d.target.name + "\n" +
-                "Title: " + d.title + "\n" +
-                "Author: " + d.author;
-        });
-
-    // add in the nodes
-    var node = svg.append("g").selectAll(".node")
-        .data(graph.nodes)
-        .enter().append("g")
-        .attr("class", "node")
-        .style("font", "11px times")
-        .style('font-family', 'Helvetica')
-        .on("mouseover", (event, d) => handleMouseOverRect(d));
+    if (data.length > 0) {
+        // format variables
+        var formatNumber = d3.format(",.0f"), // zero decimal places
+            format = function (d) { return formatNumber(d); },
+            color = d3.scaleOrdinal(d3.schemeCategory10);
 
 
-    // add the rectangles for the nodes
-    node.append("rect")
-        .attr("x", function (d) {
-            return d.x0;
-        })
-        .attr("y", function (d) { return d.y0; })
-        .attr("height", function (d) { return d.y1 - d.y0; })
-        .attr("width", sankey.nodeWidth())
-        .style("fill", "green")
-        /*function (d) {
-            return d.color = color(d.name.replace(/ .*//*, ""));
-    })*/
-        .style("stroke", function (d) {
-            return d3.rgb(d.color).darker(0.1);
-        })
-        .append("title")
-        .text(function (d) {
-            return d.name;
-        });
+        // Set the sankey diagram properties
+        var sankey = d3.sankey()
+            .nodeWidth(10)
+            .nodePadding(9)
+            .size([width, height]);
 
-    // add in the title for the nodes
-    node.append("text")
-        .attr("x", function (d) { return d.x0 - 6; })
-        .attr("y", function (d) { return (d.y1 + d.y0) / 2; })
-        .attr("dy", "0.5em")
-        .attr("text-anchor", "end")
-        .text(function (d) { return d.name; })
-        .filter(function (d) { return d.x0 < width / 2; })
-        .attr("x", function (d) { return d.x1 + 6; })
-        .attr("text-anchor", "start");
+        var path = sankey.links();
+
+        // load the data
+        graph = sankey(dataSankey(data));
+
+        // add in the links
+        var link = svg.append("g").selectAll(".link")
+            .data(graph.links)
+            .enter().append("path")
+            .attr("class", "link")
+            .attr("d", d3.sankeyLinkHorizontal())
+            .attr("stroke-width", 1)
+            .on("mouseover", (event, d) => handleMouseOver(d))
+            .on("mouseleave", (event, d) => handleMouseLeave());
+
+        // add the link titles
+        link.append("title")
+            .text(function (d) {
+                return d.source.name + " → " + d.target.name + "\n" +
+                    "Title: " + d.title + "\n" +
+                    "Author: " + d.author;
+            });
+
+        // add in the nodes
+        var node = svg.append("g").selectAll(".node")
+            .data(graph.nodes)
+            .enter().append("g")
+            .attr("class", "node")
+            .style("font", "11px times")
+            .style('font-family', 'Helvetica')
+            .on("mouseover", (event, d) => handleMouseOverRect(d));
+
+
+        // add the rectangles for the nodes
+        node.append("rect")
+            .attr("x", function (d) {
+                return d.x0;
+            })
+            .attr("y", function (d) { return d.y0; })
+            .attr("height", function (d) { return d.y1 - d.y0; })
+            .attr("width", sankey.nodeWidth())
+            .style("fill",
+                function (d) {
+                    return d.color = color(d.name.replace(/ .*/, ""));
+                })
+            .style("stroke", function (d) {
+                return d3.rgb(d.color).darker(0.1);
+            })
+            .append("title")
+            .text(function (d) {
+                return d.name;
+            });
+
+        // add in the title for the nodes
+        node.append("text")
+            .attr("x", function (d) { return d.x0 - 6; })
+            .attr("y", function (d) { return (d.y1 + d.y0) / 2; })
+            .attr("dy", "0.5em")
+            .attr("text-anchor", "end")
+            .text(function (d) { return d.name; })
+            .filter(function (d) { return d.x0 < width / 2; })
+            .attr("x", function (d) { return d.x1 + 6; })
+            .attr("text-anchor", "start");
+    }
 }
 
 // the function for moving the nodes
@@ -492,21 +519,21 @@ function scatterPlot(data) {
         .attr("cy", (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
         .style("fill", "#EDCA3A")
-        //.on("mouseover", (event, d) => handleMouseOver(d))
-        //.on("mouseleave", (event, d) => handleMouseLeave());
-        //.append("title");
-        // .html((d) => d.title + "\n" +
-        //    "Author: " + d.Author + "\n" +
-        //    "Rating: " + d.rating + "\n" +
-        //    "Award: " + d.awards);
+    //.on("mouseover", (event, d) => handleMouseOver(d))
+    //.on("mouseleave", (event, d) => handleMouseLeave());
+    //.append("title");
+    // .html((d) => d.title + "\n" +
+    //    "Author: " + d.Author + "\n" +
+    //    "Rating: " + d.rating + "\n" +
+    //    "Award: " + d.awards);
 
-    svg.on("mousemove", function(event) {
+    svg.on("mousemove", function (event) {
         fisheye.focus(d3.pointer(event));
 
-        dots.each(function(d) { d.fisheye = fisheye(d); })
-            .attr("cx", function(d) { return d.fisheye.x; })
-            .attr("cy", function(d) { return d.fisheye.y; })
-            .attr("r", function(d) { return d.fisheye.z * 1; });
+        dots.each(function (d) { d.fisheye = fisheye(d); })
+            .attr("cx", function (d) { return d.fisheye.x; })
+            .attr("cy", function (d) { return d.fisheye.y; })
+            .attr("r", function (d) { return d.fisheye.z * 1; });
     });
 
     svg.append('path')
@@ -521,37 +548,39 @@ function scatterPlot(data) {
 }
 
 function getSpearmanLinearRegression(data) {
-    var ratingVsAward = [];
+    if (data.length > 0) {
+        var ratingVsAward = [];
 
-    data.sort(function (x, y) {
-        return x.awards - y.awards;
-    });
-
-
-    data.forEach(function (d) {
-        ratingVsAward.push({
-            x: +d.awards,
-            y: +d.rating
+        data.sort(function (x, y) {
+            return x.awards - y.awards;
         });
-    });
 
-    var linearRegression1 = linearRegressionfunction(ratingVsAward);
 
-    linearRegressionLine = ss.linearRegressionLine(linearRegression1);
+        data.forEach(function (d) {
+            ratingVsAward.push({
+                x: +d.awards,
+                y: +d.rating
+            });
+        });
 
-    var regressionPoints = [];
+        var linearRegression1 = linearRegressionfunction(ratingVsAward);
 
-    const firstX = ratingVsAward[0].x;
-    const lastX = ratingVsAward.slice(-1)[0].x;
-    const xCoordinates = [firstX, lastX];
+        linearRegressionLine = ss.linearRegressionLine(linearRegression1);
 
-    for (var i = 0; i < xCoordinates.length; i++) {
-        regressionPoints.push({
-            x: xCoordinates[i],
-            y: linearRegressionLine(xCoordinates[i])
-        })
+        var regressionPoints = [];
+
+        const firstX = ratingVsAward[0].x;
+        const lastX = ratingVsAward.slice(-1)[0].x;
+        const xCoordinates = [firstX, lastX];
+
+        for (var i = 0; i < xCoordinates.length; i++) {
+            regressionPoints.push({
+                x: xCoordinates[i],
+                y: linearRegressionLine(xCoordinates[i])
+            })
+        }
+        return regressionPoints;
     }
-    return regressionPoints;
 }
 
 function linearRegressionfunction(initialData) {
@@ -569,6 +598,10 @@ function filldropDown_Author(data) {
     data.sort((a, b) => a.Author.localeCompare(b.Author));
 
     const authorDropDown = document.getElementById("authors");
+
+    while (authorDropDown.firstChild) {
+        authorDropDown.removeChild(authorDropDown.lastChild);
+      }
 
     //Fill out information inside dropdown list
     for (var i = 0; i < data.length; i++) {
@@ -628,7 +661,7 @@ function groupDataByPublishedDate(data) {
 function selectDropDownAuthor(value) {
 
     if (value == "All Authors") {
-        updateUnitChar(groupDataByPublishedDate(csvdata));
+        filters();
     }
     else {
         var dataFilter = csvdata.filter(function (d) { return d.Author == value });
@@ -641,8 +674,6 @@ function selectDropDownAuthor(value) {
 
 //tooltip
 let tooltip;
-
-
 
 function unitChart(data) {
 
@@ -701,6 +732,8 @@ function unitChart(data) {
         .call(d3.axisBottom(xScale).ticks(10).tickFormat(d3.format(".0f")));
 
 
+
+
     // Create Y axis
     svg.append("g")
         .attr("id", "gYAxis")
@@ -731,10 +764,6 @@ function unitChart(data) {
 //#region Update charts
 function updateScatterPlot(data) {
 
-    console.log("data", data);
-
-    var regressionPoints = getSpearmanLinearRegression(data);
-
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
@@ -742,6 +771,8 @@ function updateScatterPlot(data) {
 
     // append the svg object to the body of the page
     var svg = d3.select("#gScatterPlot");
+
+    var regressionPoints = getSpearmanLinearRegression(data);
 
     var maxValueAwards = d3.max(data, (d) => Math.round(parseFloat(d.awards), -2));
 
@@ -751,6 +782,7 @@ function updateScatterPlot(data) {
     var ticksNumber = (maxValueY - minValueX) + 1;
 
     if (ticksNumber > 10) { ticksNumber = 10; }
+
 
     // Scales
     var xScale = d3.scaleLinear().domain([0, maxValueAwards]).range([1, width])
@@ -803,9 +835,12 @@ function updateScatterPlot(data) {
             }
         );
 
-    d3.selectAll(".lineScatter")
-        .transition().delay(1000).duration(500)
-        .attr('d', line);
+    if (data.length > 0) {
+        d3.selectAll(".lineScatter")
+            .transition().delay(1000).duration(500)
+            .attr('d', line);
+    }
+
 }
 
 function updateUnitChar(updateData) {
@@ -815,6 +850,7 @@ function updateUnitChar(updateData) {
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
         height = 305 - margin.top - margin.bottom;
+
 
     const minValuePosition = d3.min(updateData, (d) => Math.round(parseInt(d.position), -2));
 
@@ -883,9 +919,6 @@ function updateUnitChar(updateData) {
         );
 }
 
-function updateSankey(data) {
-
-}
 //#endregion
 
 //#region  Communication between charts
