@@ -522,10 +522,10 @@ function scatterPlot(data) {
         .on("mouseover", (event, d) => handleMouseOver(d))
         .on("mouseleave", (event, d) => handleMouseLeave())
         .append("title")
-        .html((d) => d.title + "\n" +
+        .html((d) => "\"" + d.title + "\"\n" +
         "Author: " + d.Author + "\n" +
         "Rating: " + d.rating + "\n" +
-        "Award: " + d.awards);
+        "Awards: " + d.awards);
 
     svg.append('path')
         .classed('regressionLine', true)
@@ -746,7 +746,8 @@ function unitChart(data) {
         .on("mouseover", (event, d) => handleMouseOver(d))
         .on("mouseleave", (event, d) => handleMouseLeave())
         .append("title")
-        .html((d) => d.title + ", Author: " + d.author + ", " + d.publishDate);
+        .html((d) => "\"" + d.title + "\"\n" + "Author: " + d.author + "\n" + "Year: " + d.publishDate);
+
 }
 
 
@@ -811,7 +812,10 @@ function updateScatterPlot(data) {
                     .transition()
                     .duration(1000)
                     .attr("cy", (d) => yScale(parseFloat(d.rating)));
-                circles.append("title").text((d) => d.title);
+                circles.append("title").html((d) => "\"" + d.title + "\"\n" +
+                        "Author: " + d.Author + "\n" +
+                        "Rating: " + d.rating + "\n" +
+                        "Awards: " + d.awards);
             },
             (update) => {
                 update
@@ -889,8 +893,8 @@ function updateUnitChar(updateData) {
                     .transition()
                     .duration(1000)
                     .attr("cy", (d) => yScale(parseFloat(d.position)) - 5);
-                circles.append("title").text((d) => d.title);
-                circles.html((d) => d.title + ", Author: " + d.author + ", " + d.publishDate)
+                circles.append("title").html((d) => "\"" + d.title + "\"\n" + "Author: " + d.author + "\n" + "Year: " + d.publishDate);
+
             },
             (update) => {
                 update
