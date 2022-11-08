@@ -1,6 +1,7 @@
-let csvdata;
+let csvdata, csvdataUnit;
 var allGenres = [];
 var allPublishers = [];
+let ratingValue = 0, genre = "All genre", minYear = 1964, maxYear = 2020;
 
 function init() {
     d3.csv("resultshandmade2.csv").then(function (data) {
@@ -10,29 +11,88 @@ function init() {
         unitChart(data);
         sankeyChart(data);
         csvdata = data;
+        csvdataUnit = data;
     });
 }
+
+//#region Filters
+function filters() {
+
+    let allFilters = [];
+    let filterByRating;
+    if (ratingValue !== "Any") {
+        filterByRating = csvdata.filter((item) => {
+            return (parseFloat(item.rating) >= ratingValue);
+        });
+    }
+    else {
+        filterByRating = csvdata;
+    }
+
+    console.log("filterByRating", filterByRating);
+
+    let filterbyYear = filterByRating.filter((item) => {
+        return (parseFloat(item.publishDate) >= minYear && parseFloat(item.publishDate) <= maxYear);
+    });
+
+    console.log("filterbyYear", filterbyYear);
+
+    if (genre !== "All genre") {
+        for (var i = 0; i < filterbyYear.length; i++) {
+            var genres = filterbyYear[i].genres;
+            //Remove all special characteres    
+            genres = genres.replaceAll("[", "").replaceAll("]", "").replaceAll("'", "");
+            //set in an array allgenres by item      
+            var arrayGenre = genres.split(", ");
+
+            if (arrayGenre[0] === genre) {
+                allFilters.push(filterbyYear[i]);
+            }
+        }
+    }
+    else {
+        allFilters = filterbyYear;
+    }
+
+    console.log("filterByGenre", allFilters);
+
+    updateScatterPlot(allFilters);
+    updateUnitChar(groupDataByPublishedDate(allFilters));
+    removePieChart();
+    sankeyChart(allFilters);
+}
+//#endregion
 
 //#region  Rating 
 
 function ratingclick(value) {
 
-    /*removePieChart();
+    ratingValue = value;
+    filters();}
 
+$('label').click(function (e) {
+    e.preventDefault();
+
+    var radio = $(this).find('input[type=radio]');
+
+    console.log("radio", radio);
+
+    if (radio.is(':checked')) {
+        e.stopImmediatePropagation();
+        $(this).removeClass("checked");
+        radio.prop('checked', false);
+    } else {
+        radio.prop('checked', true);
+
+    }
+});
+
+function ratingCheck(value) {
     console.log("value", value);
-    console.log(csvdata);
-
-    const filteredResult = csvdata.filter((item) => {
-        console.log(parseFloat(item.rating))
-        return (parseFloat(item.rating) >= value && parseFloat(item.rating) < value);
-    });
-
-    console.log("filteredResult", filteredResult);
-
-    if (filteredResult.length > 0) {
-        dataPieChart(filteredResult);
-    }*/
+    ratingValue = value;
+    filters();
 }
+
 //#endregion
 
 //#region Dropdown list for Genre
@@ -47,9 +107,9 @@ function filldropDown_genre(data) {
         //set in an array allgenres by item      
         var arrayGenre = genres.split(", ");
 
-        for (var j = 0; j < arrayGenre.length; j++) {
-            allGenres.push(arrayGenre[j]);
-        }
+        //for (var j = 0; j < arrayGenre.length; j++) {
+        allGenres.push(arrayGenre[0]);
+        //}
     }
     //Sort all genre
     allGenres.sort();
@@ -84,24 +144,17 @@ function removeduplicate() {
 }
 
 function selectDropDown(value) {
-    /*if (value == "All genre") {
-        removePieChart();
-        dataPieChart(csvdata);
+    if (value == "All genre") {
+        genre = "All genre";
     }
     else {
-        const filteredResult = csvdata.filter((item) => {
-            return (item.genres.indexOf(value) >= 0);
-        });
-
-        if (filteredResult.length > 0) {
-            removePieChart();
-            dataPieChart(filteredResult);
-        }
-    }*/
+        genre = value;
+    }
+    filters();
 }
 
 function removePieChart() {
-    var div = document.getElementById('unitchart');
+    var div = document.getElementById('sankey');
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     }
@@ -115,15 +168,18 @@ function removePieChart() {
 $(function () {
     $("#slider-range").slider({
         range: true,
-        min: 0,
-        max: 500,
-        values: [75, 300],
+        min: 1964,
+        max: 2020,
+        values: [1964, 2020],
         slide: function (event, ui) {
-            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+            $("#amount").val(+ ui.values[0] + " - " + ui.values[1]);
+            minYear = ui.values[0];
+            maxYear = ui.values[1];
+            filters();
         }
     });
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-        " - $" + $("#slider-range").slider("values", 1));
+    $("#amount").val($("#slider-range").slider("values", 0) +
+        " - " + $("#slider-range").slider("values", 1));
 });
 //#endregion
 
@@ -199,7 +255,7 @@ function sankeyChart(data) {
         .style("fill", "green")
         /*function (d) {
             return d.color = color(d.name.replace(/ .*//*, ""));
-})*/
+    })*/
         .style("stroke", function (d) {
             return d3.rgb(d.color).darker(0.1);
         })
@@ -218,9 +274,6 @@ function sankeyChart(data) {
         .filter(function (d) { return d.x0 < width / 2; })
         .attr("x", function (d) { return d.x1 + 6; })
         .attr("text-anchor", "start");
-
-
-    //});
 }
 
 // the function for moving the nodes
@@ -294,11 +347,7 @@ function dataSankey(data) {
         name: "Series"
     });
 
-    console.log("nodes", graph.nodes);
-
-
     data.forEach(element => {
-        //console.log("element", element.publishDate);
         if (element.genres.length > 0) {
             var genres = element.genres;
             //Remove all special characteres    
@@ -327,7 +376,6 @@ function dataSankey(data) {
     });
 
     data.forEach(element => {
-        //console.log("element", element.publishDate);
         if (element.genres.length > 0) {
             var genres = element.genres;
             //Remove all special characteres    
@@ -354,7 +402,8 @@ function dataSankey(data) {
             target: target,
             value: 1,
             title: element.title,
-            author: element.Author});
+            author: element.Author
+        });
     });
 
 
@@ -368,12 +417,6 @@ function dataSankey(data) {
 function scatterPlot(data) {
 
     var regressionPoints = getSpearmanLinearRegression(data);
-    var fisheye = d3.fisheye.circular().radius(50).distortion(3);
-
-    var div = d3.select("body").append("div")
-        .attr("id", "popupdiv")
-        .attr("class", "title")
-        .style("opacity", 0);
 
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
@@ -390,10 +433,10 @@ function scatterPlot(data) {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    var minValue = d3.min(data, (d) => Math.round(parseFloat(d.rating), -2));
+    var maxValueAwards = d3.max(data, (d) => Math.round(parseFloat(d.awards), -2));
 
     // Scales
-    var xScale = d3.scaleLinear().domain(d3.extent(data, (d) => parseFloat(d.awards))).range([1, width])
+    var xScale = d3.scaleLinear().domain([0, maxValueAwards]).range([0, width])
     var yScale = d3.scaleLinear().domain([0, 5]).range([0, width]).range([height, 0]);
 
     // Title
@@ -424,13 +467,13 @@ function scatterPlot(data) {
 
     // Create X axis
     svg.append("g")
-        .attr("id", "gScatterPlot")
+        .attr("id", "gXAxisScatter")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xScale));
 
     // Create Y axis
     svg.append("g")
-        .attr("id", "gYAxis")
+        .attr("id", "gYAxisScatter")
         .attr("transform", "translate(0,0)")
         .call(d3.axisLeft(yScale));
 
@@ -440,22 +483,22 @@ function scatterPlot(data) {
         .y(d => yScale(d.y))
 
     // Create dots
-    //svg.append('g')
-     var dots = svg.selectAll("dots")
+    svg
+        .selectAll("circle")
         .data(data, (d) => d.title)
         .join("circle")
         .attr("class", "dots itemValue")
-        .datum( function(d) {
-            return {x: xScale(parseFloat(d.awards)), y: yScale(parseFloat(d.rating))} // change data, to feed to the fisheye plugin
-        })
-        .attr("cx", (d) => d.x)
-        .attr("cy", (d) => d.y)
+        .attr("cx", (d) => xScale(parseFloat(d.awards)))
+        .attr("cy", (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
         .style("fill", "#EDCA3A")
         //.on("mouseover", (event, d) => handleMouseOver(d))
         //.on("mouseleave", (event, d) => handleMouseLeave());
         //.append("title");
-        // .html((d) => d.title + ", Author: " + d.Author);
+        // .html((d) => d.title + "\n" +
+        //    "Author: " + d.Author + "\n" +
+        //    "Rating: " + d.rating + "\n" +
+        //    "Award: " + d.awards);
 
     svg.on("mousemove", function(event) {
         fisheye.focus(d3.pointer(event));
@@ -469,6 +512,7 @@ function scatterPlot(data) {
     svg.append('path')
         .classed('regressionLine', true)
         .datum(regressionPoints)
+        .attr("class", "lineScatter")
         .attr('d', line)
         .style("stroke", "#43A047")
         .style("fill", "none")
@@ -560,6 +604,7 @@ function removeduplicate_author() {
 }
 
 function groupDataByPublishedDate(data) {
+
     var grouped_data = d3.group(data, d => d.publishDate);
 
     var newData = [];
@@ -586,15 +631,14 @@ function selectDropDownAuthor(value) {
         updateUnitChar(groupDataByPublishedDate(csvdata));
     }
     else {
-        //Remove missing values
         var dataFilter = csvdata.filter(function (d) { return d.Author == value });
-
         var newValues = groupDataByPublishedDate(dataFilter);
-
         updateUnitChar(newValues);
     }
 }
 //#endregion
+
+
 //tooltip
 let tooltip;
 
@@ -630,6 +674,7 @@ function unitChart(data) {
     var xScale = d3.scaleLinear().domain(d3.extent(newData, (d) => parseFloat(d.publishDate))).range([1, width])
     var yScale = d3.scaleLinear().domain([minValue, maxValue]).range([height, 0]);
 
+
     // Title
     svg.append('text')
         .attr('x', width / 2)
@@ -653,7 +698,7 @@ function unitChart(data) {
     svg.append("g")
         .attr("id", "gXAxis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale).tickFormat((x) => x));
+        .call(d3.axisBottom(xScale).ticks(10).tickFormat(d3.format(".0f")));
 
 
     // Create Y axis
@@ -684,32 +729,109 @@ function unitChart(data) {
 //#endregion
 
 //#region Update charts
-function updateUnitChar(data) {
+function updateScatterPlot(data) {
 
-    var newData = data;
+    console.log("data", data);
+
+    var regressionPoints = getSpearmanLinearRegression(data);
+
+    // set the dimensions and margins of the graph
+    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+        width = 520 - margin.left - margin.right,
+        height = 290 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svg = d3.select("#gScatterPlot");
+
+    var maxValueAwards = d3.max(data, (d) => Math.round(parseFloat(d.awards), -2));
+
+    const minValueX = d3.min(data, (d) => Math.round(parseInt(d.awards), -2));
+    const maxValueY = d3.max(data, (d) => Math.round(parseInt(d.awards), -2));
+
+    var ticksNumber = (maxValueY - minValueX) + 1;
+
+    if (ticksNumber > 10) { ticksNumber = 10; }
+
+    // Scales
+    var xScale = d3.scaleLinear().domain([0, maxValueAwards]).range([1, width])
+    var yScale = d3.scaleLinear().domain([0, 5]).range([0, width]).range([height, 0]);
+
+
+    // Create X axis
+    svg.select("#gXAxisScatter")
+        .call(d3.axisBottom(xScale).ticks(ticksNumber).tickFormat(d3.format(".0f")));
+
+    // Create Y axis
+    svg.select("gYAxisScatter")
+        .call(d3.axisLeft(yScale));
+
+    //Line Spearman
+    line = d3.line()
+        .x(d => xScale(d.x))
+        .y(d => yScale(d.y))
+
+    // Create dots
+    svg.selectAll("circle")
+        .data(data, (d) => d.title)
+        .join(
+            (enter) => {
+                circles = enter
+                    .append("circle")
+                    .attr("class", "circle itemValue")
+                    .attr("cx", (d) => xScale(parseFloat(d.awards)))
+                    .attr("cy", (d) => yScale(0))
+                    .attr("r", 2)
+                    .style("fill", "#EDCA3A")
+                    .on("mouseover", (event, d) => handleMouseOver(d))
+                    .on("mouseleave", (event, d) => handleMouseLeave())
+                circles
+                    .transition()
+                    .duration(1000)
+                    .attr("cy", (d) => yScale(parseFloat(d.rating)));
+                circles.append("title").text((d) => d.title);
+            },
+            (update) => {
+                update
+                    .transition()
+                    .duration(1000)
+                    .attr("cx", (d) => xScale(parseFloat(d.awards)))
+                    .attr("cy", (d) => yScale(parseFloat(d.rating)))
+                    .attr("r", 2);
+            },
+            (exit) => {
+                exit.remove();
+            }
+        );
+
+    d3.selectAll(".lineScatter")
+        .transition().delay(1000).duration(500)
+        .attr('d', line);
+}
+
+function updateUnitChar(updateData) {
 
     const svg = d3.select("#gUnitChart");
 
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 520 - margin.left - margin.right,
-        height = 280 - margin.top - margin.bottom;
+        height = 305 - margin.top - margin.bottom;
 
-    const minValue = d3.min(newData, (d) => Math.round(parseInt(d.position), -2));
-    var maxValue = d3.max(newData, (d) => Math.round(parseInt(d.position), -2));
+    const minValuePosition = d3.min(updateData, (d) => Math.round(parseInt(d.position), -2));
+
+    const minValueX = d3.min(updateData, (d) => Math.round(parseInt(d.publishDate), -2));
+    const maxValueY = d3.max(updateData, (d) => Math.round(parseInt(d.publishDate), -2));
+
+    var ticksNumber = (maxValueY - minValueX) + 1;
+
+    if (ticksNumber > 10) { ticksNumber = 10; }
 
     // Scales
-    const xScale = d3.scaleLinear().domain(d3.extent(newData, (d) => parseFloat(d.publishDate))).range([1, width])
-    const yScale = d3.scaleLinear().domain([minValue, 26]).range([height, 0]);
+    const xScale = d3.scaleLinear().domain([minValueX, maxValueY]).range([1, width])
+    const yScale = d3.scaleLinear().domain([minValuePosition, 26]).range([height, 0]);
 
-    var formatxAxis = d3.format('.0f');
-
-    // Create X axis
+    // Create X axis  
     svg.select("#gXAxis")
-        .call(d3.axisBottom(xScale)
-            .tickFormat((x) => x));
-
-
-
+        .call(d3.axisBottom(xScale).ticks(ticksNumber).tickFormat(d3.format(".0f")));
 
     // Create Y axis
     svg.append("g")
@@ -719,8 +841,11 @@ function updateUnitChar(data) {
         .attr("opacity", "0");
 
     svg
+        .selectAll("circle").remove();
+
+    svg
         .selectAll("circle")
-        .data(newData, (d) => d.title)
+        .data(updateData, (d) => d.title)
         .join(
             (enter) => {
                 circles = enter
@@ -744,8 +869,12 @@ function updateUnitChar(data) {
                 update
                     .transition()
                     .duration(1000)
-                    .attr("cx", (d) => xScale(parseFloat(d.publishDate)))
-                    .attr("cy", (d) => yScale(parseFloat(d.position)) - 5)
+                    .attr("cx", function (d) {
+                        return xScale(parseFloat(d.publishDate))
+                    })
+                    .attr("cy", function (d) {
+                        return yScale(parseFloat(d.position)) - 5
+                    })
                     .attr("r", 4);
             },
             (exit) => {
@@ -753,11 +882,14 @@ function updateUnitChar(data) {
             }
         );
 }
+
+function updateSankey(data) {
+
+}
 //#endregion
 
 //#region  Communication between charts
 function handleMouseOver(item) {
-    //console.log(item);
 
     d3.selectAll(".itemValue")
         .filter(function (d, i) {
@@ -795,15 +927,11 @@ function handleMouseLeave() {
 }
 
 function handleMouseOverRect(item) {
-    //for(var i =0; i < item.sourceLinks.length; i++){
     d3.selectAll(".link").filter(function (d, i) {
-        console.log("d", d);
         return d.title == item.title;
     })
         .style("stroke-opacity", "1")
         .style("stroke-width", "1.5");
-    //}
-
 
 }
 //#endregion

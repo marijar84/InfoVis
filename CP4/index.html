@@ -19,28 +19,8 @@
     }
   </style>
   <style>
-
-    .node rect {
-      fill-opacity: .9;
-      shape-rendering: crispEdges;
-    }
     
-    .node text {
-      pointer-events: none;
-      text-shadow: 0 1px 0 #fff;
-    }
-    
-    .link {
-      fill: none;
-      stroke: #000;
-      stroke-opacity: .2;
-    }
-    
-    .link:hover {
-      stroke-opacity: .5;
-    }
-    
-    </style>
+  </style>
 
   <link rel="stylesheet" href="./css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
@@ -52,17 +32,16 @@
 
   <script src="./js/simple-statistics.js"></script>
 
-  <script src="./js/bootstrap.min.js"></script>  
+  <script src="./js/bootstrap.min.js"></script> 
 
-  
+
   <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <script src="./js/fisheye.js"></script>
 
   <script src="./js/d3-sankey.min.js"></script>
   
-  <script src="./js/fisheye.js"></script>
-  
-  <script src="project.js"></script>  
-
+  <script src="project.js"></script>
 
  
 
@@ -71,67 +50,78 @@
   </script>
 </head>
 
-<body onload="init()" style="background: rgb(234, 232, 232);" >
+<body onload="init()" style="background: rgb(234, 232, 232);">
 
-  <div class="row">    
-    <div class="col-md-7 float-md-left" id="leftColumn" style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; background: rgb(255, 255, 255);">
+  <div class="row">
+    <div class="col-md-7 float-md-left" id="leftColumn"
+      style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; background: rgb(255, 255, 255);">
       <div class="row" id="filter">
         <div class="container-fluid">
-        <table style="width: 100%">
-          <tr>
-            <td style="font-size: 14px">Rating</td>
-            <td style="font-size: 14px">Genre</td>
-            <td style="font-size: 14px">Year range</td>
-          </tr>
-          <tr>
-            <td>
-              <div class="rate">
-                <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rate" value="3" />
-                <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1" title="text">1 star</label>
-              </div>
-            </td>
-            <td>
-              <div class="dropdown" style="font-size: 14px">
-                <select id='genres' onmousedown="this.value='';" onchange="selectDropDown(this.value);">
-                </select>
-              </div>
-            </td>
-            <td>
-              <div id="slider-range"></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+          <table style="width: 100%;">
+            <tr>
+              <td style="font-size: 14px">Rating</td>
+              <td style="font-size: 14px">Genre</td>
+              <td style="font-size: 14px">Year range: <input type="text" readonly id="amount" style="border: 0; color: #000000; font-weight: normal; font-size: small; text-align: center;" size="10" /></td>
+              <td style="font-size: 14px"></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="inlineCheckbox1" value="Any" checked onclick="ratingCheck(this.value)">
+                  <label class="form-check-label" for="inlineCheckbox1">Any</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="inlineCheckbox2" value="2.5" onclick="ratingCheck(this.value)">
+                  <label class="form-check-label" for="inlineCheckbox2">2.5+</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="inlineCheckbox3" value="3.5" onclick="ratingCheck(this.value)">
+                  <label class="form-check-label" for="inlineCheckbox3">3.5+</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="inlineCheckbox4" value="4.5" onclick="ratingCheck(this.value)">
+                  <label class="form-check-label" for="inlineCheckbox4">4.5+</label>
+                </div>         
+              </td>
+              <td>
+                <div class="dropdown" style="font-size: 14px">
+                  <select id='genres' onmousedown="this.value='';" onchange="selectDropDown(this.value);">
+                  </select>
+                </div>
+              </td>
+              <td>                
+                <div id="slider-range" style="width: 160px;"></div>                
+              </td>
+              <td> 
+                <button type="button" class="btn btn-outline-dark btn-sm">Clear filter</button>              
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
 
       <div class="row" id="sankey">
-        
+
       </div>
 
     </div>
 
     <div class="col-md-5 float-md-rigth" id="rightColumn" style="padding-left: 17px;">
-      <div class="row" id="scatter"  style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px; margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
+      <div class="row" id="scatter"
+        style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px; margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
         <div id="my_dataviz"></div>
-      </div>
-      
-      <div class="row" id="unit" style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
-        <div style="font-size: 12px">Authors</div>
-        <div class="dropdown" style="font-size: 12px">
-          <select id='authors' onmousedown="this.value='';" onchange="selectDropDownAuthor(this.value);">
-          </select>
-        </div>
-        <div id="unitchart"></div>
-      </div>
     </div>
+
+    <div class="row" id="unit"
+      style="border: 1px solid rgb(132, 129, 129); border-radius: 8px; padding: 5px;margin-top: 5px; margin-right: 1px; background: rgb(255, 255, 255);"">
+        <div style=" font-size: 12px">Authors</div>
+    <div class="dropdown" style="font-size: 12px">
+      <select id='authors' onmousedown="this.value='';" onchange="selectDropDownAuthor(this.value);">
+      </select>
+    </div>
+    <div id="unitchart"></div>
+  </div>
+  </div>
 
   </div>
 
