@@ -519,22 +519,13 @@ function scatterPlot(data) {
         .attr("cy", (d) => yScale(parseFloat(d.rating)))
         .attr("r", 2)
         .style("fill", "#EDCA3A")
-    //.on("mouseover", (event, d) => handleMouseOver(d))
-    //.on("mouseleave", (event, d) => handleMouseLeave());
-    //.append("title");
-    // .html((d) => d.title + "\n" +
-    //    "Author: " + d.Author + "\n" +
-    //    "Rating: " + d.rating + "\n" +
-    //    "Award: " + d.awards);
-
-    svg.on("mousemove", function (event) {
-        fisheye.focus(d3.pointer(event));
-
-        dots.each(function (d) { d.fisheye = fisheye(d); })
-            .attr("cx", function (d) { return d.fisheye.x; })
-            .attr("cy", function (d) { return d.fisheye.y; })
-            .attr("r", function (d) { return d.fisheye.z * 1; });
-    });
+        .on("mouseover", (event, d) => handleMouseOver(d))
+        .on("mouseleave", (event, d) => handleMouseLeave())
+        .append("title")
+        .html((d) => d.title + "\n" +
+        "Author: " + d.Author + "\n" +
+        "Rating: " + d.rating + "\n" +
+        "Award: " + d.awards);
 
     svg.append('path')
         .classed('regressionLine', true)
